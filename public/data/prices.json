@@ -1,0 +1,97 @@
+{
+  "intro": "歡迎來到 MOO².tw ✦ 精選日韓輕珠寶耳環，夾式與針式均有販售。每一件設計都來自對細節的堅持，讓耳環成為妳今日最閃亮的主角。歡迎透過 Instagram 私訊洽詢或訂購。",
+  "instagram": "https://www.instagram.com/moo2.tw/",
+  "products": [
+    {
+      "id": "pearl-round",
+      "name": "珍珠圓形耳環",
+      "images": ["/images/pearl-round-1.jpg", "/images/pearl-round-2.jpg"],
+      "description": "白色仿珍珠，百搭日常款，簡約優雅",
+      "variants": [
+        { "type": "耳夾", "price": 280 },
+        { "type": "耳針", "price": 250 }
+      ],
+      "colors": [
+        { "name": "珍珠白", "hex": "#F0EDE8" },
+        { "name": "淡粉", "hex": "#F2C4CE" }
+      ],
+      "tag": "熱銷"
+    },
+    {
+      "id": "blue-geo",
+      "name": "藍色幾何耳環",
+      "images": ["/images/blue-geo-1.jpg"],
+      "description": "深藍琺瑯幾何造型，日系清新風格",
+      "variants": [
+        { "type": "耳夾", "price": 320 }
+      ],
+      "colors": [
+        { "name": "深藍", "hex": "#2d6a9f" },
+        { "name": "天藍", "hex": "#7eb8d4" }
+      ],
+      "tag": ""
+    },
+    {
+      "id": "moon-pin",
+      "name": "月亮星星耳環",
+      "images": [
+        "/images/moon-pin-1.jpg",
+        "/images/moon-pin-2.jpg",
+        "/images/moon-pin-3.jpg"
+      ],
+      "description": "鍍金月亮星星，浪漫輕奢，適合日常與約會",
+      "variants": [
+        { "type": "耳針", "price": 350 }
+      ],
+      "colors": [
+        { "name": "鍍金", "hex": "#C9A84C" }
+      ],
+      "tag": "熱銷"
+    },
+    {
+      "id": "shell-bow",
+      "name": "貝殼蝴蝶結耳環",
+      "images": ["/images/shell-bow-1.jpg"],
+      "description": "天然貝殼材質，蝴蝶結造型，少女感十足",
+      "variants": [
+        { "type": "耳夾", "price": 350 },
+        { "type": "耳針", "price": 320 }
+      ],
+      "colors": [
+        { "name": "貝白", "hex": "#EDE8DE" },
+        { "name": "淡藍", "hex": "#B8D4E8" },
+        { "name": "玫瑰", "hex": "#E8B4B8" }
+      ],
+      "tag": "新品"
+    },
+    {
+      "id": "sapphire-round",
+      "name": "圓形藍寶石耳環",
+      "images": ["/images/sapphire-1.jpg"],
+      "description": "深藍色仿寶石，古典優雅氣質",
+      "variants": [
+        { "type": "耳針", "price": 420 }
+      ],
+      "colors": [
+        { "name": "深藍", "hex": "#1e3a5f" },
+        { "name": "寶藍", "hex": "#0047AB" }
+      ],
+      "tag": "新品"
+    },
+    {
+      "id": "pearl-hoop",
+      "name": "細圈珍珠耳環",
+      "images": ["/images/pearl-hoop-1.jpg"],
+      "description": "細金圈搭配小珍珠，極簡百搭款",
+      "variants": [
+        { "type": "耳針", "price": 290 },
+        { "type": "耳夾", "price": 310 }
+      ],
+      "colors": [
+        { "name": "金色", "hex": "#C9A84C" },
+        { "name": "銀色", "hex": "#B8C0CC" }
+      ],
+      "tag": ""
+    }
+  ]
+}

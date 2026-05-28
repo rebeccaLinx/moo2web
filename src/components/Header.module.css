@@ -1,0 +1,54 @@
+.header {
+  background: var(--blue-deep);
+  color: var(--white);
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(30,58,95,0.3);
+}
+.inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.brand { display: flex; align-items: baseline; gap: 2px; }
+.name {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  line-height: 1;
+}
+.name sup { font-size: 0.62em; font-weight: 700; vertical-align: super; }
+.dot { font-size: 1.1rem; font-weight: 300; color: var(--blue-light); margin-right: 8px; }
+.tagline {
+  font-size: 0.68rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.42);
+  letter-spacing: 0.14em;
+  align-self: center;
+}
+.igLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  color: var(--blue-pale);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 6px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.igLink:hover { background: var(--blue-mid); color: var(--white); border-color: transparent; }
+
+@media (max-width: 480px) {
+  .inner { height: 56px; }
+  .name { font-size: 1.3rem; }
+  .tagline { display: none; }
+  .igLink { padding: 5px 10px; font-size: 0.78rem; }
+}
