@@ -78,7 +78,7 @@ moo2web/
 │   │   └── favicon.ico
 │   │
 │   ├── components/
-│   │   ├── Header.tsx          ← Hero 區：品牌名、日文副標、IG 按鈕
+│   │   ├── Header.tsx          ← Hero 區：品牌名、副標、IG 按鈕
 │   │   ├── Header.module.css
 │   │   ├── ProductSection.tsx  ← 商品主體：篩選 tab + 商品格
 │   │   ├── ProductSection.module.css
@@ -90,6 +90,9 @@ moo2web/
 │   │   ├── IntroSection.module.css
 │   │   ├── Footer.tsx          ← 頁尾：品牌名、IG 連結、版權
 │   │   └── Footer.module.css
+│   │
+│   ├── lib/
+│   │   └── imgPath.ts          ← ★ GitHub Pages basePath helper（見第 9 節）
 │   │
 │   └── types/
 │       └── product.ts          ← TypeScript 型別定義
@@ -311,9 +314,8 @@ export interface PriceData {
 **Props：** `{ instagram: string }`
 
 Hero 區塊，頁面最頂部。包含：
-- **金色印章**：圓形邊框，「藍」字，`fadeUp` 動畫 (0s delay)
 - **品牌名**：`moo2.tw`，明朝體，金色句點，`fadeUp` 動畫 (0.1s delay)
-- **日文副標**：`てづくり イヤリング`，`fadeUp` 動畫 (0.2s delay)
+- **副標**：`手作耳飾`，`fadeUp` 動畫 (0.2s delay)
 - **詩意標語**：`fadeUp` 動畫 (0.3s delay)
 - **IG 按鈕**：內嵌 SVG 圖示，hover 深色，`fadeUp` 動畫 (0.4s delay)
 - **分隔線**：左右漸層線 + 金色菱形
@@ -340,7 +342,7 @@ const [selected, setSelected] = useState<Product | null>(null)  // 開啟 modal 
 
 **Sticky 導覽列：**
 ```
-全部  ｜  耳針 ピアス  ｜  耳夾 イヤリング
+全部  ｜  耳針  ｜  耳夾
 ```
 `backdrop-filter: blur(10px)` 毛玻璃效果，滾動時固定在頂部。
 
@@ -481,7 +483,7 @@ npx serve out   # 預覽 out/ 目錄
 你的電腦 → git push → GitHub → 觸發 Actions → npm build → 上傳 out/ → GitHub Pages
 ```
 
-每次 `git push origin main` 都會自動觸發，約 2–3 分鐘完成部署。
+每次 `git push origin master` 都會自動觸發，約 2–3 分鐘完成部署。
 
 ### 9.2 初次設定（只需做一次）
 
@@ -501,7 +503,7 @@ npx serve out   # 預覽 out/ 目錄
 ```yaml
 on:
   push:
-    branches: [main]     # 只有 push 到 main 才觸發
+    branches: [master]   # 只有 push 到 master 才觸發
 
 permissions:
   pages: write           # 允許寫入 GitHub Pages
@@ -646,12 +648,19 @@ git -c http.proxy="" -c http.sslBackend=schannel push -u origin main
 
 ---
 
-### Q：本地 `npm run dev` 跑正常，但 GitHub Pages 版本破版？
-**A：** 通常是 `basePath` 問題。確認 `next.config.ts`：
-```typescript
-basePath: process.env.GITHUB_ACTIONS ? '/moo2web' : '',
+### Q：本地 `npm run dev` 跑正常，但 GitHub Pages 圖片不顯示？
+**A：** Next.js 16 不自動將 `basePath` 加到 `next/image` 的 `src`。  
+所有圖片必須用 `imgPath()` helper 包住：
+```tsx
+import { imgPath } from '@/lib/imgPath'
+<Image src={imgPath(product.images[0])} ... />
 ```
-只要在 CI 環境中 build，路徑會自動加上 `/moo2web`。
+`imgPath()` 在 GitHub Actions 環境自動補 `/moo2web` 前綴，本機為空字串。
+
+---
+
+### Q：點縮圖後主圖沒有切換？
+**A：** 已修正（commit `0f5c89d`）。原因是 `setIdx(0)` 和 keyboard handler 在同一個 `useEffect` 且 `idx` 在 deps 裡，導致切換時被重置。修法：拆成兩個獨立 `useEffect`。
 
 ---
 
