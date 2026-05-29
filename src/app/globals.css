@@ -1,27 +1,53 @@
 /* ── Design Tokens ─────────────────────────── */
 :root {
-  --blue-deep:  #1e3a5f;
-  --blue-mid:   #2d6a9f;
-  --blue-light: #5b9bd5;
-  --blue-pale:  #dce8f5;
-  --blue-mist:  #eef4fb;
-  --white:      #ffffff;
-  --text-dark:  #1a2a3a;
-  --text-mid:   #4a6274;
-  --radius:     10px;
-  --shadow:     0 2px 12px rgba(30, 58, 95, 0.08);
+  --ink:    #1b2a4a;
+  --indigo: #2d4a7c;
+  --blue:   #4a6fa5;
+  --sky:    #8fb3d9;
+  --mist:   #dce8f4;
+  --paper:  #f4f8fc;
+  --cloud:  #ffffff;
+  --gold:   #c9a24b;
+  --accent: #3a5a8c;
+  --line:   #cdddee;
+  --serif:  "Shippori Mincho", serif;
+  --sans:   "Zen Maru Gothic", sans-serif;
+  --shadow: 0 4px 18px rgba(45, 74, 124, .07);
+  --radius: 18px;
 }
 
 /* ── Reset ──────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background: var(--blue-mist);
-  color: var(--text-dark);
-  font-weight: 300;
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--paper);
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(143,179,217,.18), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(74,111,165,.12), transparent 45%),
+    linear-gradient(180deg, #eef5fb 0%, #f4f8fc 100%);
+  background-attachment: fixed;
   line-height: 1.7;
-  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Grain texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: .04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; border: none; }
+button { font-family: var(--sans); cursor: pointer; border: none; background: transparent; }
 img { display: block; max-width: 100%; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

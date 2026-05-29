@@ -1,100 +1,127 @@
 .card {
-  background: var(--white);
+  background: var(--cloud);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--blue-pale);
   overflow: hidden;
+  box-shadow: var(--shadow);
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  display: flex;
-  flex-direction: column;
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .5s ease, transform .5s ease, box-shadow .4s cubic-bezier(.2,.8,.2,1);
+}
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 28px rgba(30,58,95,0.14);
+  transform: translateY(-7px);
+  box-shadow: 0 18px 38px rgba(45,74,124,.18);
 }
-.card:focus-visible { outline: 2px solid var(--blue-mid); outline-offset: 2px; }
+.card:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
 
-/* 圖片 */
-.imgWrap {
+/* Thumbnail */
+.thumb {
   position: relative;
-  width: 100%;
   aspect-ratio: 1 / 1;
-  background: var(--blue-pale);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.noImg {
-  background: linear-gradient(135deg, var(--blue-pale) 0%, var(--blue-mist) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  background: radial-gradient(circle at 50% 38%, var(--mist), var(--paper));
+  overflow: hidden;
 }
-.noImg::after { content: '✦'; font-size: 2rem; color: var(--blue-light); opacity: 0.4; }
-.img { object-fit: cover; transition: transform 0.3s; }
-.card:hover .img { transform: scale(1.05); }
+.thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 20%, rgba(255,255,255,.6), transparent 50%);
+  pointer-events: none;
+}
+.noImg {}
+.img { object-fit: cover; transition: transform .4s; }
+.card:hover .img { transform: scale(1.06); }
 
-/* 色卡 */
+.motif { width: 46%; height: 46%; opacity: .55; }
+
+.badge {
+  position: absolute;
+  top: 12px; left: 12px;
+  z-index: 2;
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: #fff;
+  background: var(--gold);
+  padding: 4px 11px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+/* Swatches */
 .swatches {
   display: flex;
+  align-items: center;
   gap: 5px;
-  padding: 7px 12px;
-  border-top: 1px solid var(--blue-pale);
+  padding: 8px 16px;
+  border-top: 1px solid var(--line);
   flex-wrap: wrap;
 }
 .swatch {
-  width: 16px;
-  height: 16px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
-  border: 1.5px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,.12);
+  box-shadow: 0 1px 2px rgba(0,0,0,.08);
   flex-shrink: 0;
-  transition: transform 0.15s;
 }
-.swatch:hover { transform: scale(1.25); }
+.colorName {
+  font-size: 11.5px;
+  color: #8a98a8;
+  margin-left: 4px;
+  letter-spacing: .03em;
+}
 
-/* 文字 */
-.body {
-  padding: 12px 14px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  flex: 1;
+/* Info */
+.info { padding: 16px 18px 20px; }
+.name {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: .03em;
+  color: var(--ink);
+  line-height: 1.3;
 }
-.tag {
-  display: inline-block;
-  background: var(--blue-light);
-  color: var(--white);
-  font-size: 0.66rem;
-  font-weight: 500;
-  padding: 2px 7px;
-  border-radius: 4px;
-  letter-spacing: 0.06em;
-  align-self: flex-start;
+.sub {
+  font-size: 12.5px;
+  color: var(--blue);
+  margin-top: 4px;
+  font-weight: 300;
+  line-height: 1.5;
 }
-.name { font-size: 0.88rem; font-weight: 500; color: var(--text-dark); line-height: 1.4; }
-.desc { font-size: 0.76rem; color: var(--text-mid); line-height: 1.6; flex: 1; }
-.cardFooter {
+.priceRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
-  margin-top: 6px;
+  margin-top: 14px;
+  gap: 8px;
   flex-wrap: wrap;
 }
-.price { font-size: 1rem; font-weight: 700; color: var(--blue-mid); white-space: nowrap; }
-.price::before { content: 'NT$ '; font-size: 0.7rem; font-weight: 400; color: var(--text-mid); }
-.badges { display: flex; gap: 4px; flex-wrap: wrap; }
-.badge {
-  font-size: 0.65rem;
-  font-weight: 500;
-  padding: 2px 7px;
-  border-radius: 10px;
-  background: var(--blue-mist);
-  color: var(--blue-mid);
-  border: 1px solid var(--blue-pale);
-  white-space: nowrap;
+.price {
+  font-family: var(--serif);
+  font-size: 21px;
+  color: var(--indigo);
+  font-weight: 700;
 }
-
-@media (max-width: 480px) {
-  .body { padding: 10px 10px 12px; }
+.price small {
+  font-size: 12px;
+  color: var(--sky);
+  margin-right: 2px;
+  font-weight: 400;
+}
+.badges { display: flex; gap: 4px; flex-wrap: wrap; }
+.typeBadge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  color: var(--blue);
+  letter-spacing: .04em;
 }

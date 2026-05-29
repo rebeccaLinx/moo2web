@@ -1,8 +1,8 @@
 import priceData from '../../public/data/prices.json'
 import type { PriceData } from '@/types/product'
 import Header from '@/components/Header'
-import IntroSection from '@/components/IntroSection'
 import ProductSection from '@/components/ProductSection'
+import IntroSection from '@/components/IntroSection'
 import Footer from '@/components/Footer'
 
 export default function Home() {
@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <>
       <Header instagram={data.instagram} />
-      <IntroSection intro={data.intro} />
       <ProductSection products={data.products} />
+      <IntroSection intro={data.intro} />
       <Footer instagram={data.instagram} />
     </>
   )

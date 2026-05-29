@@ -1,22 +1,23 @@
 import type { Metadata } from 'next'
-import { Noto_Sans_TC } from 'next/font/google'
 import './globals.css'
 
-const noto = Noto_Sans_TC({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
-  display: 'swap',
-})
-
 export const metadata: Metadata = {
-  title: 'MOO².tw｜耳環價目表',
-  description: '精選日韓輕珠寶耳環，夾式與針式均有販售',
+  title: 'moo2.tw｜手作耳飾',
+  description: '以藍為調，手作每一副耳飾。',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-TW">
-      <body className={noto.className}>{children}</body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@300;400;500;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>{children}</body>
     </html>
   )
 }
