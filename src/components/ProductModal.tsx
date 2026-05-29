@@ -100,6 +100,23 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
               </div>
             ))}
           </div>
+          {product.promotion && (() => {
+            const minPrice = Math.min(...product.variants.map(v => v.price))
+            const originalTotal = minPrice * product.promotion!.quantity
+            const saved = originalTotal - product.promotion!.price
+            return (
+              <div className={styles.promoBlock}>
+                <div className={styles.promoTitle}>
+                  🏷 買 {product.promotion!.quantity} 件優惠　NT${product.promotion!.price}
+                </div>
+                {saved > 0 && (
+                  <div className={styles.promoSave}>
+                    原價 {product.promotion!.quantity} × NT${minPrice} = NT${originalTotal}，省 NT${saved}
+                  </div>
+                )}
+              </div>
+            )
+          })()}
 
           {product.colors.length > 0 && (
             <>
