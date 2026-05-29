@@ -9,8 +9,8 @@ type Filter = 'all' | '耳夾' | '耳針'
 
 const FILTERS: { id: Filter; label: string }[] = [
   { id: 'all',  label: '全部' },
-  { id: '耳針', label: '耳針  ピアス' },
-  { id: '耳夾', label: '耳夾  イヤリング' },
+  { id: '耳針', label: '耳針' },
+  { id: '耳夾', label: '耳夾' },
 ]
 
 const SECTIONS = [

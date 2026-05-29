@@ -10,11 +10,10 @@ export default function Header({ instagram }: { instagram: string }) {
   return (
     <header className={styles.hero}>
       <div className={styles.wrap}>
-        <div className={styles.seal}>藍</div>
         <h1 className={styles.brand}>
           moo2<span className={styles.dot}>.</span>tw
         </h1>
-        <p className={styles.jp}>てづくり イヤリング</p>
+        <p className={styles.jp}>手作耳飾</p>
         <p className={styles.tagline}>
           以藍為調，手作每一副耳飾。<br />
           把海與天空的清透，輕輕別在耳邊。
