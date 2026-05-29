@@ -20,7 +20,7 @@ const SECTIONS = [
 
 export default function ProductSection({ products }: { products: Product[] }) {
   const [filter, setFilter]     = useState<Filter>('all')
-  const [selected, setSelected] = useState<Product | null>(null)
+  const [selected, setSelected] = useState<{ product: Product; colorIdx: number } | null>(null)
 
   const getItems = (variantType: '耳夾' | '耳針') =>
     products.filter(p => p.variants.some(v => v.type === variantType))
@@ -64,7 +64,7 @@ export default function ProductSection({ products }: { products: Product[] }) {
                     <ProductCard
                       key={p.id}
                       product={p}
-                      onClick={() => setSelected(p)}
+                      onClick={(colorIdx) => setSelected({ product: p, colorIdx })}
                       index={cardIndex++}
                     />
                   ))}
@@ -89,7 +89,7 @@ export default function ProductSection({ products }: { products: Product[] }) {
                 <ProductCard
                   key={p.id}
                   product={p}
-                  onClick={() => setSelected(p)}
+                  onClick={(colorIdx) => setSelected({ product: p, colorIdx })}
                   index={i}
                 />
               ))}
@@ -99,7 +99,11 @@ export default function ProductSection({ products }: { products: Product[] }) {
       </div>
 
       {selected && (
-        <ProductModal product={selected} onClose={() => setSelected(null)} />
+        <ProductModal
+          product={selected.product}
+          initialColorIdx={selected.colorIdx}
+          onClose={() => setSelected(null)}
+        />
       )}
     </div>
   )
