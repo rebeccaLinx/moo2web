@@ -12,9 +12,9 @@
         { "type": "耳針", "price": 1250 }
       ],
       "colors": [
-        { "name": "珍珠白", "hex": "#F0EDE8" },
-        { "name": "淡粉", "hex": "#F2C4CE" },
-        { "name": "圓形", "hex": "#F2C4CE" }
+        { "name": "珍珠白", "hex": "#F0EDE8", "image": "/images/moon.png" },
+        { "name": "淡粉", "hex": "#F2C4CE", "image": "/images/moon2.png" },
+        { "name": "圓形", "hex": "#F2C4CE", "image": "/images/moon3.png" }
       ],
       "tag": "熱銷"
     },
@@ -43,7 +43,7 @@
         { "type": "耳針", "price": 350 }
       ],
       "colors": [
-        { "name": "鍍金", "hex": "#C9A84C" }
+        { "name": "鍍金", "hex": "#C9A84C", "image": "/images/toffee.png" }
       ],
       "tag": "熱銷"
     },
