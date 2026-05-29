@@ -48,7 +48,7 @@
   overflow: hidden;
   flex-shrink: 0;
 }
-.mainImg { object-fit: cover; }
+.mainImg { object-fit: contain; }
 .noImg {
   width: 100%;
   height: 100%;
@@ -87,7 +87,7 @@
   width: 56px !important;
   height: 56px !important;
   border-radius: 8px;
-  object-fit: cover;
+  object-fit: contain;
   cursor: pointer;
   border: 2px solid transparent;
   opacity: 0.72;
