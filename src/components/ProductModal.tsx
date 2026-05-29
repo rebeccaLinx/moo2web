@@ -8,10 +8,12 @@ import styles from './ProductModal.module.css'
 interface Props {
   product: Product
   onClose: () => void
+  initialColorIdx?: number
 }
 
-export default function ProductModal({ product, onClose }: Props) {
+export default function ProductModal({ product, onClose, initialColorIdx = 0 }: Props) {
   const [idx, setIdx] = useState(0)
+  const [selectedColorIdx, setSelectedColorIdx] = useState(initialColorIdx)
   const images = product.images
 
   const go = useCallback((next: number) => {
@@ -19,10 +21,13 @@ export default function ProductModal({ product, onClose }: Props) {
   }, [images.length])
 
   useEffect(() => {
-    setIdx(0)
+    setSelectedColorIdx(initialColorIdx)
+    const initImage = product.colors[initialColorIdx]?.image
+    const initIdx = initImage ? images.indexOf(initImage) : 0
+    setIdx(initIdx >= 0 ? initIdx : 0)
     document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = '' }
-  }, [product])
+  }, [product, initialColorIdx, images])
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -33,6 +38,14 @@ export default function ProductModal({ product, onClose }: Props) {
     document.addEventListener('keydown', handler)
     return () => document.removeEventListener('keydown', handler)
   }, [onClose, go, idx])
+
+  const handleColorClick = (i: number) => {
+    setSelectedColorIdx(i)
+    const image = product.colors[i]?.image
+    if (!image) return
+    const imgIdx = images.indexOf(image)
+    if (imgIdx >= 0) setIdx(imgIdx)
+  }
 
   return (
     <div className={styles.overlay} onClick={onClose} role="dialog" aria-modal="true">
@@ -90,8 +103,12 @@ export default function ProductModal({ product, onClose }: Props) {
             <>
               <p className={styles.sectionLabel}>顏色選項</p>
               <div className={styles.colors}>
-                {product.colors.map(c => (
-                  <div key={c.name} className={styles.colorItem}>
+                {product.colors.map((c, i) => (
+                  <div
+                    key={c.name}
+                    className={`${styles.colorItem} ${i === selectedColorIdx ? styles.colorActive : ''}`}
+                    onClick={() => handleColorClick(i)}
+                  >
                     <div className={styles.colorDot} style={{ background: c.hex }} title={c.name} />
                     <span className={styles.colorName}>{c.name}</span>
                   </div>
