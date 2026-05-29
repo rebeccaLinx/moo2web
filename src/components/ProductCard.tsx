@@ -7,13 +7,14 @@ import styles from './ProductCard.module.css'
 
 interface Props {
   product: Product
-  onClick: () => void
+  onClick: (colorIdx: number) => void
   index?: number
 }
 
 export default function ProductCard({ product, onClick, index = 0 }: Props) {
   const [imgError, setImgError] = useState(false)
   const [visible, setVisible] = useState(false)
+  const [selectedColorIdx, setSelectedColorIdx] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -35,23 +36,33 @@ export default function ProductCard({ product, onClick, index = 0 }: Props) {
   const prices = product.variants.map(v => v.price)
   const minPrice = Math.min(...prices)
   const priceLabel = prices.length > 1 ? `${minPrice} 起` : String(minPrice)
-  const hasImage = product.images.length > 0 && !imgError
+
+  const displayImage =
+    product.colors[selectedColorIdx]?.image ?? product.images[0]
+
+  const hasImage = !!displayImage && !imgError
+
+  const handleColorClick = (e: React.MouseEvent, i: number) => {
+    e.stopPropagation()
+    setSelectedColorIdx(i)
+    setImgError(false)
+  }
 
   return (
     <div
       ref={ref}
       className={`${styles.card} ${visible ? styles.show : ''}`}
-      onClick={onClick}
+      onClick={() => onClick(selectedColorIdx)}
       role="button"
       tabIndex={0}
-      onKeyDown={e => e.key === 'Enter' && onClick()}
+      onKeyDown={e => e.key === 'Enter' && onClick(selectedColorIdx)}
     >
       <div className={`${styles.thumb} ${!hasImage ? styles.noImg : ''}`}>
         {product.tag && <span className={styles.badge}>{product.tag}</span>}
         {hasImage ? (
           <Image
             className={styles.img}
-            src={imgPath(product.images[0])}
+            src={imgPath(displayImage)}
             alt={product.name}
             fill
             sizes="(max-width: 480px) 45vw, 240px"
@@ -64,10 +75,18 @@ export default function ProductCard({ product, onClick, index = 0 }: Props) {
 
       {product.colors.length > 0 && (
         <div className={styles.swatches}>
-          {product.colors.map(c => (
-            <span key={c.name} className={styles.swatch} style={{ background: c.hex }} title={c.name} />
+          {product.colors.map((c, i) => (
+            <span
+              key={c.name}
+              className={`${styles.swatch} ${i === selectedColorIdx ? styles.swatchActive : ''}`}
+              style={{ background: c.hex }}
+              title={c.name}
+              onClick={e => handleColorClick(e, i)}
+            />
           ))}
-          <span className={styles.colorName}>{product.colors.map(c => c.name).join('・')}</span>
+          <span className={styles.colorName}>
+            {product.colors.map(c => c.name).join('・')}
+          </span>
         </div>
       )}
 

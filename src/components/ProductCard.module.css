@@ -125,3 +125,10 @@
   color: var(--blue);
   letter-spacing: .04em;
 }
+.swatchActive {
+  transform: scale(1.25);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px currentColor;
+  outline: 2px solid rgba(0,0,0,0.25);
+  outline-offset: 2px;
+}
+.swatch { cursor: pointer; }
