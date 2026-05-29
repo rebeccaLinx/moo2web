@@ -106,6 +106,11 @@ export default function ProductCard({ product, onClick, index = 0 }: Props) {
             ))}
           </div>
         </div>
+        {product.promotion && (
+          <div className={styles.promoBadge}>
+            買{product.promotion.quantity}件 NT${product.promotion.price}
+          </div>
+        )}
       </div>
     </div>
   )
