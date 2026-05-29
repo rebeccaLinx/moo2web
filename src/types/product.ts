@@ -9,6 +9,11 @@ export interface Color {
   image?: string
 }
 
+export interface Promotion {
+  quantity: number
+  price: number
+}
+
 export interface Product {
   id: string
   name: string
@@ -17,6 +22,7 @@ export interface Product {
   variants: Variant[]
   colors: Color[]
   tag: string
+  promotion?: Promotion
 }
 
 export interface PriceData {
