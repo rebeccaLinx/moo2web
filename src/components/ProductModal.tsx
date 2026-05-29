@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import type { Product } from '@/types/product'
+import { imgPath } from '@/lib/imgPath'
 import styles from './ProductModal.module.css'
 
 interface Props {
@@ -41,7 +42,7 @@ export default function ProductModal({ product, onClose }: Props) {
         <div className={styles.gallery}>
           <div className={styles.mainWrap}>
             {images.length > 0 ? (
-              <Image className={styles.mainImg} src={images[idx]} alt={`${product.name} 圖片 ${idx + 1}`}
+              <Image className={styles.mainImg} src={imgPath(images[idx])} alt={`${product.name} 圖片 ${idx + 1}`}
                      fill sizes="(max-width: 600px) 100vw, 380px" />
             ) : (
               <div className={styles.noImg}>✦</div>
@@ -59,7 +60,7 @@ export default function ProductModal({ product, onClose }: Props) {
             <div className={styles.thumbs}>
               {images.map((src, i) => (
                 <Image key={i} className={`${styles.thumb} ${i === idx ? styles.thumbActive : ''}`}
-                       src={src} alt={`縮圖 ${i + 1}`} width={56} height={56}
+                       src={imgPath(src)} alt={`縮圖 ${i + 1}`} width={56} height={56}
                        onClick={() => setIdx(i)} />
               ))}
             </div>

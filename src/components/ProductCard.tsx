@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import type { Product } from '@/types/product'
+import { imgPath } from '@/lib/imgPath'
 import styles from './ProductCard.module.css'
 
 interface Props {
@@ -50,7 +51,7 @@ export default function ProductCard({ product, onClick, index = 0 }: Props) {
         {hasImage ? (
           <Image
             className={styles.img}
-            src={product.images[0]}
+            src={imgPath(product.images[0])}
             alt={product.name}
             fill
             sizes="(max-width: 480px) 45vw, 240px"
