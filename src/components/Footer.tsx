@@ -10,7 +10,7 @@ export default function Footer({ instagram }: { instagram: string }) {
         <a href={instagram} target="_blank" rel="noopener noreferrer">Instagram</a>
         <a href={instagram} target="_blank" rel="noopener noreferrer">訂購私訊</a>
       </div>
-      <p className={styles.copy}>© 2026 moo2.tw ｜ 手作耳飾 · 以藍為調</p>
+      <p className={styles.copy}>© 2026 moo2.tw ｜ 找到屬於自己的小奇蹟與小美好</p>
     </footer>
   )
 }
