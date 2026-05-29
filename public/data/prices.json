@@ -3,20 +3,30 @@
   "instagram": "https://www.instagram.com/moo2.tw/",
   "products": [
     {
-      "id": "pearl-round",
-      "name": "珍珠圓形耳環",
-      "images": ["/images/moon.png", "/images/moon2.png", "/images/moon3.png"],
-      "description": "月亮，百搭日常款，簡約優雅",
+      "id": "small-flowers",
+      "name": "迷你小花花",
+      "images": [
+        "/images/smallFlower/s1.jpg",
+        "/images/smallFlower/s2.jpg",
+        "/images/smallFlower/s3.jpg"
+      ],
+      "description": "超可愛迷你小花花",
       "variants": [
-        { "type": "耳夾", "price": 1280 },
-        { "type": "耳針", "price": 1250 }
+        { "type": "耳夾", "price": 320 },
+        { "type": "耳針", "price": 320 }
       ],
       "colors": [
-        { "name": "珍珠白", "hex": "#F0EDE8", "image": "/images/moon.png" },
-        { "name": "淡粉", "hex": "#F2C4CE", "image": "/images/moon2.png" },
-        { "name": "圓形", "hex": "#F2C4CE", "image": "/images/moon3.png" }
+        { "name": "白", "hex": "#F0EDE8", "image": "/images/smallFlower/w1.jpg" },
+        { "name": "淡粉", "hex": "#FFE4EF", "image": "/images/smallFlower/p1.jpg" },
+        { "name": "渲染粉", "hex": "#F875AA", "image": "/images/smallFlower/p2.jpg" },
+        { "name": "黑粉", "hex": ["#F39EB6", "#080616"], "image": "/images/smallFlower/p3.jpg" },
+        { "name": "黃", "hex": "#FEEC41", "image": "/images/smallFlower/y1.jpg" },
+        { "name": "紅", "hex": "#D51C39", "image": "/images/smallFlower/r1.jpg" },
+        { "name": "淺藍", "hex": "#4BB8FA", "image": "/images/smallFlower/b1.jpg" },
+        { "name": "深藍", "hex": "#111844", "image": "/images/smallFlower/b2.jpg" }
       ],
-      "tag": "熱銷"
+      "tag": "熱銷",
+      "promotion": { "quantity": 2, "price": 580 }
     },
     {
       "id": "blue-geo",
