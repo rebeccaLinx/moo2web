@@ -16,7 +16,7 @@
 7. [元件文件](#7-元件文件)
 8. [本地開發](#8-本地開發)
 9. [部署到-github-pages](#9-部署到-github-pages)
-10. [內容更新指南](#10-內容更新指南)
+10. [內容更新指南](#10-內容更新指南)（含顏色換圖、雙色色塊、優惠活動）
 11. [常見問題](#11-常見問題)
 
 ---
@@ -92,7 +92,8 @@ moo2web/
 │   │   └── Footer.module.css
 │   │
 │   ├── lib/
-│   │   └── imgPath.ts          ← ★ GitHub Pages basePath helper（見第 9 節）
+│   │   ├── imgPath.ts          ← ★ GitHub Pages basePath helper（見第 9 節）
+│   │   └── hexToBackground.ts  ← 單色/雙色 hex 轉 CSS background 字串
 │   │
 │   └── types/
 │       └── product.ts          ← TypeScript 型別定義
@@ -233,8 +234,9 @@ next.config.ts
   "id": "唯一英文 ID，不可重複",
   "name": "商品名稱",
   "images": [
-    "/images/照片檔名1.jpg",
-    "/images/照片檔名2.jpg"
+    "/images/總覽照.jpg",
+    "/images/顏色A照.jpg",
+    "/images/顏色B照.jpg"
   ],
   "description": "商品描述",
   "variants": [
@@ -242,9 +244,11 @@ next.config.ts
     { "type": "耳針", "price": 320 }
   ],
   "colors": [
-    { "name": "顏色名稱", "hex": "#色碼" }
+    { "name": "顏色A", "hex": "#色碼", "image": "/images/顏色A照.jpg" },
+    { "name": "雙色", "hex": ["#色碼1", "#色碼2"] }
   ],
-  "tag": "熱銷"
+  "tag": "熱銷",
+  "promotion": { "quantity": 2, "price": 580 }
 }
 ```
 
@@ -254,13 +258,15 @@ next.config.ts
 |---|---|---|---|
 | `id` | string | ✅ | 唯一識別碼，英文+連字號，不可重複 |
 | `name` | string | ✅ | 商品中文名稱 |
-| `images` | string[] | ✅ | 圖片路徑陣列；填 `[]` 則顯示 SVG 佔位插圖 |
+| `images` | string[] | ✅ | 圖片路徑陣列；`images[0]` 為預設顯示圖；填 `[]` 顯示 SVG 佔位插圖 |
 | `description` | string | ✅ | 商品描述（顯示在卡片和彈窗） |
 | `variants` | Variant[] | ✅ | 至少一筆；type 只能是 `"耳夾"` 或 `"耳針"` |
 | `variants[].price` | number | ✅ | 新台幣，純數字不含 NT$ |
 | `colors` | Color[] | ✅ | 可為空陣列 `[]`（不顯示色卡） |
-| `colors[].hex` | string | ✅ | 格式：`"#rrggbb"` |
+| `colors[].hex` | string \| [string, string] | ✅ | 單色：`"#rrggbb"`；雙色：`["#色1", "#色2"]`（左右各半） |
+| `colors[].image` | string | — | 選填；點擊此色塊時切換到的圖片路徑，須為 `images[]` 中的值 |
 | `tag` | string | ✅ | 標籤文字；不想顯示填 `""` |
+| `promotion` | object | — | 選填；`{ quantity: 數量, price: 優惠總價 }` |
 
 ### 常用 tag 值
 
@@ -283,7 +289,13 @@ export interface Variant {
 
 export interface Color {
   name: string
-  hex: string
+  hex: string | [string, string]   // 單色或雙色
+  image?: string                    // 選填，點色塊時切換到此圖
+}
+
+export interface Promotion {
+  quantity: number   // 優惠數量
+  price: number      // 優惠總價
 }
 
 export interface Product {
@@ -294,6 +306,7 @@ export interface Product {
   variants: Variant[]
   colors: Color[]
   tag: string
+  promotion?: Promotion
 }
 
 export interface PriceData {
@@ -374,13 +387,22 @@ useEffect(() => {
 - 只有一種 variant → 顯示固定價格：`NT$ 290`
 - 兩種 variants → 顯示最低價起：`NT$ 250 起`
 
+**色塊點擊換圖：**
+- 初始顯示 `images[0]`（總覽圖）
+- 點擊有 `image` 欄位的顏色 → 切換到對應圖片
+- `selectedColorIdx` state 記錄選中的顏色，傳給 modal 作為 `initialColorIdx`
+
+**優惠 badge：**
+- 商品有 `promotion` 欄位時，在價格列下方顯示金色圓角 badge「買N件 NT$X」
+
 ---
 
 ### ProductModal
 
 **檔案：** `src/components/ProductModal.tsx`  
 **類型：** Client Component (`'use client'`)  
-**Props：** `{ product: Product; onClose: () => void }`
+**Props：** `{ product: Product; onClose: () => void; initialColorIdx?: number }`  
+**掛載位置：** `createPortal` → `document.body`（避免被 IntroSection 的 z-index 蓋住）
 
 **鍵盤操作：**
 | 按鍵 | 功能 |
@@ -601,11 +623,65 @@ git -c http.proxy="" -c http.sslBackend=schannel push -u origin main
 ]
 ```
 
-### 10.5 下架商品
+### 10.5 設定顏色對應圖片
+
+讓點擊色塊時自動切換到該顏色的商品圖片：
+
+1. 把各顏色的照片放入 `public/images/`
+2. 將所有圖片加入 `images[]`（第一張為預設顯示圖）
+3. 在對應顏色加上 `"image"` 欄位，值必須是 `images[]` 中的路徑
+
+```json
+{
+  "images": [
+    "/images/product-all.jpg",
+    "/images/product-red.jpg",
+    "/images/product-blue.jpg"
+  ],
+  "colors": [
+    { "name": "紅", "hex": "#D51C39", "image": "/images/product-red.jpg" },
+    { "name": "藍", "hex": "#4BB8FA", "image": "/images/product-blue.jpg" }
+  ]
+}
+```
+
+沒有 `"image"` 欄位的顏色，點擊後只切換高亮，不換圖。
+
+---
+
+### 10.6 設定雙色色塊
+
+將 `hex` 改為包含兩個色碼的陣列，色塊會以左右各半方式顯示：
+
+```json
+{ "name": "黑粉", "hex": ["#111111", "#F2789F"] }
+```
+
+---
+
+### 10.7 設定優惠活動
+
+在商品物件加入 `promotion` 欄位：
+
+```json
+{
+  "id": "small-flowers",
+  "promotion": { "quantity": 2, "price": 580 }
+}
+```
+
+效果：
+- 商品卡顯示金色 badge「買2件 NT$580」
+- Modal 顯示優惠區塊，自動計算節省金額（`最低單價 × 數量 - 優惠價`）
+- 不設定 `promotion` 欄位 → 不顯示任何優惠元素
+
+---
+
+### 10.9 下架商品
 
 直接從 `products` 陣列刪除整筆物件，並刪除對應照片（可選）。
 
-### 10.6 修改顏色 Token
+### 10.10 修改顏色 Token
 
 如需調整整站配色，編輯 `src/app/globals.css` → `:root`：
 
@@ -618,7 +694,7 @@ git -c http.proxy="" -c http.sslBackend=schannel push -u origin main
 
 修改後需重新 build（`npm run build`）。
 
-### 10.7 修改頁首標語
+### 10.11 修改頁首標語
 
 編輯 `src/components/Header.tsx`，找到以下程式碼並修改：
 
