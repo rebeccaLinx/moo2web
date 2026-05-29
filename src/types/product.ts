@@ -6,6 +6,7 @@ export interface Variant {
 export interface Color {
   name: string
   hex: string
+  image?: string
 }
 
 export interface Product {
