@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import type { Product } from '@/types/product'
 import { imgPath } from '@/lib/imgPath'
@@ -47,7 +48,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = 0 }: 
     if (imgIdx >= 0) setIdx(imgIdx)
   }
 
-  return (
+  return createPortal(
     <div className={styles.overlay} onClick={onClose} role="dialog" aria-modal="true">
       <div className={styles.box} onClick={e => e.stopPropagation()}>
         <button className={styles.close} onClick={onClose} aria-label="關閉">✕</button>
@@ -118,6 +119,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = 0 }: 
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
