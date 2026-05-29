@@ -1,26 +1,27 @@
 {
-  "intro": "歡迎來到 MOO².tw ✦ 精選日韓輕珠寶耳環，夾式與針式均有販售。每一件設計都來自對細節的堅持，讓耳環成為妳今日最閃亮的主角。歡迎透過 Instagram 私訊洽詢或訂購。",
+  "intro": "歡迎來到 MOO².tw ✦ 精選手作耳環，夾式與針式均有販售。每一件設計都來自對細節的堅持，讓耳環成為妳今日最閃亮的主角。歡迎透過 Instagram 私訊洽詢或訂購。",
   "instagram": "https://www.instagram.com/moo2.tw/",
   "products": [
     {
       "id": "pearl-round",
       "name": "珍珠圓形耳環",
-      "images": ["/images/pearl-round-1.jpg", "/images/pearl-round-2.jpg"],
-      "description": "白色仿珍珠，百搭日常款，簡約優雅",
+      "images": ["/images/moon.png", "/images/moon2.png", "/images/moon3.png"],
+      "description": "月亮，百搭日常款，簡約優雅",
       "variants": [
-        { "type": "耳夾", "price": 280 },
-        { "type": "耳針", "price": 250 }
+        { "type": "耳夾", "price": 1280 },
+        { "type": "耳針", "price": 1250 }
       ],
       "colors": [
         { "name": "珍珠白", "hex": "#F0EDE8" },
-        { "name": "淡粉", "hex": "#F2C4CE" }
+        { "name": "淡粉", "hex": "#F2C4CE" },
+        { "name": "圓形", "hex": "#F2C4CE" }
       ],
       "tag": "熱銷"
     },
     {
       "id": "blue-geo",
       "name": "藍色幾何耳環",
-      "images": ["/images/blue-geo-1.jpg"],
+      "images": ["/images/news.png"],
       "description": "深藍琺瑯幾何造型，日系清新風格",
       "variants": [
         { "type": "耳夾", "price": 320 }
@@ -35,9 +36,7 @@
       "id": "moon-pin",
       "name": "月亮星星耳環",
       "images": [
-        "/images/moon-pin-1.jpg",
-        "/images/moon-pin-2.jpg",
-        "/images/moon-pin-3.jpg"
+        "/images/toffee.png"
       ],
       "description": "鍍金月亮星星，浪漫輕奢，適合日常與約會",
       "variants": [
@@ -51,7 +50,7 @@
     {
       "id": "shell-bow",
       "name": "貝殼蝴蝶結耳環",
-      "images": ["/images/shell-bow-1.jpg"],
+      "images": ["/images/film3.png"],
       "description": "天然貝殼材質，蝴蝶結造型，少女感十足",
       "variants": [
         { "type": "耳夾", "price": 350 },
@@ -67,7 +66,7 @@
     {
       "id": "sapphire-round",
       "name": "圓形藍寶石耳環",
-      "images": ["/images/sapphire-1.jpg"],
+      "images": ["/images/exellent.png"],
       "description": "深藍色仿寶石，古典優雅氣質",
       "variants": [
         { "type": "耳針", "price": 420 }
@@ -81,7 +80,7 @@
     {
       "id": "pearl-hoop",
       "name": "細圈珍珠耳環",
-      "images": ["/images/pearl-hoop-1.jpg"],
+      "images": ["/images/down-arrow.png"],
       "description": "細金圈搭配小珍珠，極簡百搭款",
       "variants": [
         { "type": "耳針", "price": 290 },
