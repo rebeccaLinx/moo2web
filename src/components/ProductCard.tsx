@@ -14,7 +14,7 @@ interface Props {
 export default function ProductCard({ product, onClick, index = 0 }: Props) {
   const [imgError, setImgError] = useState(false)
   const [visible, setVisible] = useState(false)
-  const [selectedColorIdx, setSelectedColorIdx] = useState(0)
+  const [selectedColorIdx, setSelectedColorIdx] = useState(-1)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -38,7 +38,9 @@ export default function ProductCard({ product, onClick, index = 0 }: Props) {
   const priceLabel = prices.length > 1 ? `${minPrice} 起` : String(minPrice)
 
   const displayImage =
-    product.colors[selectedColorIdx]?.image ?? product.images[0]
+    selectedColorIdx >= 0
+      ? (product.colors[selectedColorIdx]?.image ?? product.images[0])
+      : product.images[0]
 
   const hasImage = !!displayImage && !imgError
 

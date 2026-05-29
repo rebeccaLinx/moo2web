@@ -12,7 +12,7 @@ interface Props {
   initialColorIdx?: number
 }
 
-export default function ProductModal({ product, onClose, initialColorIdx = 0 }: Props) {
+export default function ProductModal({ product, onClose, initialColorIdx = -1 }: Props) {
   const [idx, setIdx] = useState(0)
   const [selectedColorIdx, setSelectedColorIdx] = useState(initialColorIdx)
   const images = product.images
@@ -23,7 +23,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = 0 }: 
 
   useEffect(() => {
     setSelectedColorIdx(initialColorIdx)
-    const initImage = product.colors[initialColorIdx]?.image
+    const initImage = initialColorIdx >= 0 ? product.colors[initialColorIdx]?.image : undefined
     const initIdx = initImage ? images.indexOf(initImage) : 0
     setIdx(initIdx >= 0 ? initIdx : 0)
     document.body.style.overflow = 'hidden'
