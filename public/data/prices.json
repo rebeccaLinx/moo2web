@@ -12,8 +12,8 @@
       ],
       "description": "超可愛迷你小花花",
       "variants": [
-        { "type": "耳夾", "price": 320 },
-        { "type": "耳針", "price": 320 }
+        { "type": "耳夾", "price": 250 },
+        { "type": "耳針", "price": 250 }
       ],
       "colors": [
         { "name": "白", "hex": "#F0EDE8", "image": "/images/smallFlower/w1.jpg" },
@@ -26,7 +26,7 @@
         { "name": "深藍", "hex": "#111844", "image": "/images/smallFlower/b2.jpg" }
       ],
       "tag": "熱銷",
-      "promotion": { "quantity": 2, "price": 580 }
+      "promotion": { "quantity": 2, "price": 480 }
     },
     {
       "id": "blue-geo",
