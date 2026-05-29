@@ -5,7 +5,7 @@ export interface Variant {
 
 export interface Color {
   name: string
-  hex: string
+  hex: string | [string, string]
   image?: string
 }
 

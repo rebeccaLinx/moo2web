@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import type { Product } from '@/types/product'
 import { imgPath } from '@/lib/imgPath'
+import { hexToBackground } from '@/lib/hexToBackground'
 import styles from './ProductModal.module.css'
 
 interface Props {
@@ -110,7 +111,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
                     className={`${styles.colorItem} ${i === selectedColorIdx ? styles.colorActive : ''}`}
                     onClick={() => handleColorClick(i)}
                   >
-                    <div className={styles.colorDot} style={{ background: c.hex }} title={c.name} />
+                    <div className={styles.colorDot} style={{ background: hexToBackground(c.hex) }} title={c.name} />
                     <span className={styles.colorName}>{c.name}</span>
                   </div>
                 ))}

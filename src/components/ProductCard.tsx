@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import type { Product } from '@/types/product'
 import { imgPath } from '@/lib/imgPath'
+import { hexToBackground, firstHex } from '@/lib/hexToBackground'
 import styles from './ProductCard.module.css'
 
 interface Props {
@@ -71,7 +72,7 @@ export default function ProductCard({ product, onClick, index = 0 }: Props) {
             onError={() => setImgError(true)}
           />
         ) : (
-          <EarringMotif index={index} hex={product.colors[0]?.hex ?? '#8fb3d9'} />
+          <EarringMotif index={index} hex={firstHex(product.colors[0]?.hex ?? '#8fb3d9')} />
         )}
       </div>
 
@@ -81,7 +82,7 @@ export default function ProductCard({ product, onClick, index = 0 }: Props) {
             <span
               key={c.name}
               className={`${styles.swatch} ${i === selectedColorIdx ? styles.swatchActive : ''}`}
-              style={{ background: c.hex }}
+              style={{ background: hexToBackground(c.hex) }}
               title={c.name}
               onClick={e => handleColorClick(e, i)}
             />
