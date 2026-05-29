@@ -20,17 +20,18 @@ export default function ProductModal({ product, onClose }: Props) {
 
   useEffect(() => {
     setIdx(0)
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [product])
+
+  useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
       if (e.key === 'ArrowLeft')  go(idx - 1)
       if (e.key === 'ArrowRight') go(idx + 1)
     }
     document.addEventListener('keydown', handler)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.removeEventListener('keydown', handler)
-      document.body.style.overflow = ''
-    }
+    return () => document.removeEventListener('keydown', handler)
   }, [onClose, go, idx])
 
   return (
