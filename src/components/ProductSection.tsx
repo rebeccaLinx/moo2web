@@ -23,12 +23,16 @@ export default function ProductSection({ products }: { products: Product[] }) {
   const [filter, setFilter]     = useState<Filter>('all')
   const [selected, setSelected] = useState<{ product: Product; colorIdx: number } | null>(null)
 
+  const sorted = [...products].sort((a, b) =>
+    (a.tag === 'soldOut' ? 1 : 0) - (b.tag === 'soldOut' ? 1 : 0)
+  )
+
   const getItems = (category: VariantCategory) =>
-    products.filter(p => p.variants.some(v => getVariantCategory(v.type) === category))
+    sorted.filter(p => p.variants.some(v => getVariantCategory(v.type) === category))
 
   const allFiltered = filter === 'all'
-    ? products
-    : products.filter(p => p.variants.some(v => getVariantCategory(v.type) === filter))
+    ? sorted
+    : sorted.filter(p => p.variants.some(v => getVariantCategory(v.type) === filter))
 
   let cardIndex = 0
 

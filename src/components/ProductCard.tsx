@@ -44,6 +44,7 @@ export default function ProductCard({ product, onClick, index = 0 }: Props) {
       : product.images[0]
 
   const hasImage = !!displayImage && !imgError
+  const isSoldOut = product.tag === 'soldOut'
 
   const handleColorClick = (e: React.MouseEvent, i: number) => {
     e.stopPropagation()
@@ -61,7 +62,11 @@ export default function ProductCard({ product, onClick, index = 0 }: Props) {
       onKeyDown={e => e.key === 'Enter' && onClick(selectedColorIdx)}
     >
       <div className={`${styles.thumb} ${!hasImage ? styles.noImg : ''}`}>
-        {product.tag && <span className={styles.badge}>{product.tag}</span>}
+        {product.tag && (
+          <span className={isSoldOut ? styles.badgeSoldOut : styles.badge}>
+            {isSoldOut ? 'SOLD OUT' : product.tag}
+          </span>
+        )}
         {hasImage ? (
           <Image
             className={styles.img}
