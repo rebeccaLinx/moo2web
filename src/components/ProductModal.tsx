@@ -1,11 +1,12 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import type { Product } from '@/types/product'
 import { imgPath } from '@/lib/imgPath'
 import { hexToBackground } from '@/lib/hexToBackground'
 import styles from './ProductModal.module.css'
+import { type VariantCategory, CATEGORY_LABEL, getVariantCategory } from '@/lib/variantCategory'
 
 interface Props {
   product: Product
@@ -14,25 +15,43 @@ interface Props {
 }
 
 export default function ProductModal({ product, onClose, initialColorIdx = -1 }: Props) {
-  const [idx, setIdx] = useState(0)
-  const [selectedColorIdx, setSelectedColorIdx] = useState(initialColorIdx)
-  const images = product.images
-
-  const go = useCallback((next: number) => {
-    if (next >= 0 && next < images.length) {
-      setIdx(next)
-      setSelectedColorIdx(-1)
+  const allImages = useMemo(() => {
+    const seen = new Set(product.images)
+    const extra: string[] = []
+    for (const c of product.colors) {
+      if (c.image && !seen.has(c.image)) { seen.add(c.image); extra.push(c.image) }
     }
-  }, [images.length])
+    for (const v of product.variants) {
+      if (v.image && !seen.has(v.image)) { seen.add(v.image); extra.push(v.image) }
+    }
+    for (const s of (product.sizes ?? [])) {
+      if (s.image && !seen.has(s.image)) { seen.add(s.image); extra.push(s.image) }
+    }
+    return [...product.images, ...extra]
+  }, [product])
+
+  const [idx, setIdx] = useState(() => {
+    const initImage = initialColorIdx >= 0 ? product.colors[initialColorIdx]?.image : undefined
+    const initIdx = initImage ? allImages.indexOf(initImage) : 0
+    return initIdx >= 0 ? initIdx : 0
+  })
+  const [selectedColorIdx, setSelectedColorIdx] = useState(initialColorIdx)
+  const [selectedVariantIdx, setSelectedVariantIdx] = useState(-1)
+  const [selectedSizeIdx, setSelectedSizeIdx] = useState(-1)
 
   useEffect(() => {
-    setSelectedColorIdx(initialColorIdx)
-    const initImage = initialColorIdx >= 0 ? product.colors[initialColorIdx]?.image : undefined
-    const initIdx = initImage ? images.indexOf(initImage) : 0
-    setIdx(initIdx >= 0 ? initIdx : 0)
     document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = '' }
-  }, [product, initialColorIdx, images])
+  }, [])
+
+  const go = useCallback((next: number) => {
+    if (next >= 0 && next < allImages.length) {
+      setIdx(next)
+      setSelectedColorIdx(-1)
+      setSelectedVariantIdx(-1)
+      setSelectedSizeIdx(-1)
+    }
+  }, [allImages.length])
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -46,14 +65,35 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
 
   const handleColorClick = (i: number) => {
     setSelectedColorIdx(i)
+    setSelectedVariantIdx(-1)
+    setSelectedSizeIdx(-1)
     const image = product.colors[i]?.image
     if (!image) return
-    const imgIdx = images.indexOf(image)
+    const imgIdx = allImages.indexOf(image)
     if (imgIdx >= 0) setIdx(imgIdx)
   }
 
-  const activeColorImage = selectedColorIdx >= 0 ? product.colors[selectedColorIdx]?.image : undefined
-  const mainSrc = activeColorImage ?? images[idx]
+  const handleVariantClick = (i: number) => {
+    setSelectedVariantIdx(i)
+    setSelectedColorIdx(-1)
+    setSelectedSizeIdx(-1)
+    const image = product.variants[i]?.image
+    if (!image) return
+    const imgIdx = allImages.indexOf(image)
+    if (imgIdx >= 0) setIdx(imgIdx)
+  }
+
+  const handleSizeClick = (i: number) => {
+    setSelectedSizeIdx(i)
+    setSelectedColorIdx(-1)
+    setSelectedVariantIdx(-1)
+    const image = product.sizes?.[i]?.image
+    if (!image) return
+    const imgIdx = allImages.indexOf(image)
+    if (imgIdx >= 0) setIdx(imgIdx)
+  }
+
+  const mainSrc = allImages[idx]
 
   return createPortal(
     <div className={styles.overlay} onClick={onClose} role="dialog" aria-modal="true">
@@ -63,27 +103,27 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
         {/* Gallery */}
         <div className={styles.gallery}>
           <div className={styles.mainWrap}>
-            {images.length > 0 ? (
+            {allImages.length > 0 ? (
               <Image className={styles.mainImg} src={imgPath(mainSrc)} alt={`${product.name} 圖片 ${idx + 1}`}
                      fill sizes="(max-width: 600px) 100vw, 380px" />
             ) : (
               <div className={styles.noImg}>✦</div>
             )}
-            {images.length > 1 && (
+            {allImages.length > 1 && (
               <>
                 <button className={`${styles.arrow} ${styles.prev}`} onClick={() => go(idx - 1)}
                         disabled={idx === 0} aria-label="上一張">&#8249;</button>
                 <button className={`${styles.arrow} ${styles.next}`} onClick={() => go(idx + 1)}
-                        disabled={idx === images.length - 1} aria-label="下一張">&#8250;</button>
+                        disabled={idx === allImages.length - 1} aria-label="下一張">&#8250;</button>
               </>
             )}
           </div>
-          {images.length > 1 && (
+          {allImages.length > 1 && (
             <div className={styles.thumbs}>
-              {images.map((src, i) => (
-                <Image key={i} className={`${styles.thumb} ${i === idx ? styles.thumbActive : ''}`}
+              {allImages.map((src, i) => (
+                <Image key={src} className={`${styles.thumb} ${i === idx ? styles.thumbActive : ''}`}
                        src={imgPath(src)} alt={`縮圖 ${i + 1}`} width={56} height={56}
-                       onClick={() => { setIdx(i); setSelectedColorIdx(-1) }} />
+                       onClick={() => { setIdx(i); setSelectedColorIdx(-1); setSelectedVariantIdx(-1); setSelectedSizeIdx(-1) }} />
               ))}
             </div>
           )}
@@ -97,15 +137,77 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
           <h2 className={styles.name}>{product.name}</h2>
           <p className={styles.desc}>{product.description}</p>
 
-          <p className={styles.sectionLabel}>款式與價格</p>
-          <div className={styles.variants}>
-            {product.variants.map(v => (
-              <div key={v.type} className={styles.variantRow}>
-                <span className={styles.variantType}>{v.type}</span>
-                <span className={styles.variantPrice}>{v.price}</span>
+          {product.colors.length > 0 && (
+            <>
+              <p className={styles.sectionLabel}>顏色選項</p>
+              <div className={styles.colors}>
+                {product.colors.map((c, i) => (
+                  <button
+                    type="button"
+                    key={c.name}
+                    className={`${styles.colorItem} ${i === selectedColorIdx ? styles.colorActive : ''}`}
+                    onClick={() => handleColorClick(i)}
+                    aria-pressed={i === selectedColorIdx}
+                  >
+                    <div className={styles.colorDot} style={{ background: hexToBackground(c.hex) }} title={c.name} />
+                    <span className={styles.colorName}>{c.name}</span>
+                  </button>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
+
+          <p className={styles.sectionLabel}>款式與價格</p>
+          {(() => {
+            const categories: VariantCategory[] = ['earHook', 'earClip']
+            const hasMultipleCategories = categories.filter(
+              cat => product.variants.some(v => getVariantCategory(v.type) === cat)
+            ).length > 1
+            return categories.map(cat => {
+              const group = product.variants
+                .map((v, i) => ({ v, i }))
+                .filter(({ v }) => getVariantCategory(v.type) === cat)
+              if (!group.length) return null
+              return (
+                <div key={cat} className={styles.variants}>
+                  {hasMultipleCategories && (
+                    <p className={styles.variantGroupLabel}>{CATEGORY_LABEL[cat]}</p>
+                  )}
+                  {group.map(({ v, i }) => (
+                    <button
+                      type="button"
+                      key={v.type}
+                      className={`${styles.variantRow} ${styles.variantClickable} ${i === selectedVariantIdx ? styles.variantActive : ''}`}
+                      onClick={() => handleVariantClick(i)}
+                      aria-pressed={i === selectedVariantIdx}
+                    >
+                      <span className={styles.variantType}>{v.type}</span>
+                      <span className={styles.variantPrice}>{v.price}</span>
+                    </button>
+                  ))}
+                </div>
+              )
+            })
+          })()}
+          {product.sizes?.length ? (
+            <>
+              <p className={styles.sectionLabel}>尺寸</p>
+              <div className={styles.variants}>
+                {product.sizes.map((s, i) => (
+                  <button
+                    type="button"
+                    key={s.name}
+                    className={`${styles.variantRow} ${s.image ? styles.variantClickable : ''} ${i === selectedSizeIdx ? styles.variantActive : ''}`}
+                    onClick={() => handleSizeClick(i)}
+                    aria-pressed={i === selectedSizeIdx}
+                  >
+                    <span className={styles.variantType}>{s.name}</span>
+                    {s.price != null && <span className={styles.variantPrice}>{s.price}</span>}
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : null}
           {product.promotion && (() => {
             const minPrice = Math.min(...product.variants.map(v => v.price))
             const originalTotal = minPrice * product.promotion!.quantity
@@ -124,23 +226,6 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
             )
           })()}
 
-          {product.colors.length > 0 && (
-            <>
-              <p className={styles.sectionLabel}>顏色選項</p>
-              <div className={styles.colors}>
-                {product.colors.map((c, i) => (
-                  <div
-                    key={c.name}
-                    className={`${styles.colorItem} ${i === selectedColorIdx ? styles.colorActive : ''}`}
-                    onClick={() => handleColorClick(i)}
-                  >
-                    <div className={styles.colorDot} style={{ background: hexToBackground(c.hex) }} title={c.name} />
-                    <span className={styles.colorName}>{c.name}</span>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
         </div>
       </div>
     </div>,

@@ -1,33 +1,38 @@
 'use client'
 import { useState } from 'react'
 import type { Product } from '@/types/product'
+import { type VariantCategory, CATEGORY_LABEL, CATEGORY_EN, getVariantCategory } from '@/lib/variantCategory'
 import ProductCard from './ProductCard'
 import ProductModal from './ProductModal'
 import styles from './ProductSection.module.css'
 
-type Filter = 'all' | '耳夾' | '耳針'
+type Filter = 'all' | VariantCategory
 
 const FILTERS: { id: Filter; label: string }[] = [
-  { id: 'all',  label: '全部' },
-  { id: '耳針', label: '耳針' },
-  { id: '耳夾', label: '耳夾' },
+  { id: 'all',      label: '全部' },
+  { id: 'earHook',  label: CATEGORY_LABEL.earHook },
+  { id: 'earClip',  label: CATEGORY_LABEL.earClip },
 ]
 
-const SECTIONS = [
-  { id: '耳針' as const, title: '耳針', en: 'Pierced' },
-  { id: '耳夾' as const, title: '耳夾', en: 'Clip-on' },
+const SECTIONS: { id: VariantCategory }[] = [
+  { id: 'earHook' },
+  { id: 'earClip' },
 ]
 
 export default function ProductSection({ products }: { products: Product[] }) {
   const [filter, setFilter]     = useState<Filter>('all')
   const [selected, setSelected] = useState<{ product: Product; colorIdx: number } | null>(null)
 
-  const getItems = (variantType: '耳夾' | '耳針') =>
-    products.filter(p => p.variants.some(v => v.type === variantType))
+  const sorted = [...products].sort((a, b) =>
+    (a.tag === 'soldOut' ? 1 : 0) - (b.tag === 'soldOut' ? 1 : 0)
+  )
+
+  const getItems = (category: VariantCategory) =>
+    sorted.filter(p => p.variants.some(v => getVariantCategory(v.type) === category))
 
   const allFiltered = filter === 'all'
-    ? products
-    : products.filter(p => p.variants.some(v => v.type === filter))
+    ? sorted
+    : sorted.filter(p => p.variants.some(v => getVariantCategory(v.type) === filter))
 
   let cardIndex = 0
 
@@ -55,8 +60,8 @@ export default function ProductSection({ products }: { products: Product[] }) {
             return (
               <section key={sec.id} className={styles.section}>
                 <div className={styles.secHead}>
-                  <h2 className={styles.secTitle}>{sec.title}</h2>
-                  <span className={styles.secEn}>{sec.en}</span>
+                  <h2 className={styles.secTitle}>{CATEGORY_LABEL[sec.id]}</h2>
+                  <span className={styles.secEn}>{CATEGORY_EN[sec.id]}</span>
                   <span className={styles.secRule} />
                 </div>
                 <div className={styles.grid}>
@@ -77,10 +82,10 @@ export default function ProductSection({ products }: { products: Product[] }) {
           <section className={styles.section}>
             <div className={styles.secHead}>
               <h2 className={styles.secTitle}>
-                {SECTIONS.find(s => s.id === filter)?.title}
+                {filter !== 'all' ? CATEGORY_LABEL[filter] : ''}
               </h2>
               <span className={styles.secEn}>
-                {SECTIONS.find(s => s.id === filter)?.en}
+                {filter !== 'all' ? CATEGORY_EN[filter] : ''}
               </span>
               <span className={styles.secRule} />
             </div>

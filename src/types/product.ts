@@ -1,11 +1,18 @@
 export interface Variant {
-  type: '耳夾' | '耳針'
+  type: string
   price: number
+  image?: string
 }
 
 export interface Color {
   name: string
   hex: string | [string, string]
+  image?: string
+}
+
+export interface Size {
+  name: string
+  price?: number
   image?: string
 }
 
@@ -21,6 +28,7 @@ export interface Product {
   description: string
   variants: Variant[]
   colors: Color[]
+  sizes?: Size[]
   tag: string
   promotion?: Promotion
 }

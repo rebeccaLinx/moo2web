@@ -4,13 +4,13 @@ export default function Footer({ instagram }: { instagram: string }) {
   return (
     <footer className={styles.footer}>
       <div className={styles.brand}>
-        moo2<span className={styles.dot}>.</span>tw
+        MOO²<span className={styles.dot}>.</span>TW
       </div>
       <div className={styles.links}>
         <a href={instagram} target="_blank" rel="noopener noreferrer">Instagram</a>
         <a href={instagram} target="_blank" rel="noopener noreferrer">訂購私訊</a>
       </div>
-      <p className={styles.copy}>© 2026 moo2.tw ｜ 找到屬於自己的小奇蹟與小美好</p>
+      <p className={styles.copy}>© {new Date().getFullYear()} moo2.tw ｜ 微光傾瀉, 仿佛整片夜空都在你耳邊墜落</p>
     </footer>
   )
 }

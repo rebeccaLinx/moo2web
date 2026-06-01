@@ -54,6 +54,19 @@
   font-weight: 500;
 }
 
+.badgeSoldOut {
+  position: absolute;
+  top: 12px; left: 12px;
+  z-index: 2;
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: #fff;
+  background: rgba(80, 80, 90, 0.82);
+  padding: 4px 11px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
 /* Swatches */
 .swatches {
   display: flex;
