@@ -49,6 +49,9 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
     if (imgIdx >= 0) setIdx(imgIdx)
   }
 
+  const activeColorImage = selectedColorIdx >= 0 ? product.colors[selectedColorIdx]?.image : undefined
+  const mainSrc = activeColorImage ?? images[idx]
+
   return createPortal(
     <div className={styles.overlay} onClick={onClose} role="dialog" aria-modal="true">
       <div className={styles.box} onClick={e => e.stopPropagation()}>
@@ -58,7 +61,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
         <div className={styles.gallery}>
           <div className={styles.mainWrap}>
             {images.length > 0 ? (
-              <Image className={styles.mainImg} src={imgPath(images[idx])} alt={`${product.name} 圖片 ${idx + 1}`}
+              <Image className={styles.mainImg} src={imgPath(mainSrc)} alt={`${product.name} 圖片 ${idx + 1}`}
                      fill sizes="(max-width: 600px) 100vw, 380px" />
             ) : (
               <div className={styles.noImg}>✦</div>
