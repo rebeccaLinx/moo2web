@@ -6,6 +6,7 @@ import type { Product } from '@/types/product'
 import { imgPath } from '@/lib/imgPath'
 import { hexToBackground } from '@/lib/hexToBackground'
 import styles from './ProductModal.module.css'
+import { type VariantCategory, CATEGORY_LABEL, getVariantCategory } from '@/lib/variantCategory'
 
 interface Props {
   product: Product
@@ -120,18 +121,35 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
           <p className={styles.desc}>{product.description}</p>
 
           <p className={styles.sectionLabel}>款式與價格</p>
-          <div className={styles.variants}>
-            {product.variants.map((v, i) => (
-              <div
-                key={v.type}
-                className={`${styles.variantRow} ${v.image ? styles.variantClickable : ''} ${i === selectedVariantIdx ? styles.variantActive : ''}`}
-                onClick={() => handleVariantClick(i)}
-              >
-                <span className={styles.variantType}>{v.type}</span>
-                <span className={styles.variantPrice}>{v.price}</span>
-              </div>
-            ))}
-          </div>
+          {(() => {
+            const categories: VariantCategory[] = ['earHook', 'earClip']
+            const hasMultipleCategories = categories.filter(
+              cat => product.variants.some(v => getVariantCategory(v.type) === cat)
+            ).length > 1
+            return categories.map(cat => {
+              const group = product.variants
+                .map((v, i) => ({ v, i }))
+                .filter(({ v }) => getVariantCategory(v.type) === cat)
+              if (!group.length) return null
+              return (
+                <div key={cat} className={styles.variants}>
+                  {hasMultipleCategories && (
+                    <p className={styles.variantGroupLabel}>{CATEGORY_LABEL[cat]}</p>
+                  )}
+                  {group.map(({ v, i }) => (
+                    <div
+                      key={v.type}
+                      className={`${styles.variantRow} ${v.image ? styles.variantClickable : ''} ${i === selectedVariantIdx ? styles.variantActive : ''}`}
+                      onClick={() => handleVariantClick(i)}
+                    >
+                      <span className={styles.variantType}>{v.type}</span>
+                      <span className={styles.variantPrice}>{v.price}</span>
+                    </div>
+                  ))}
+                </div>
+              )
+            })
+          })()}
           {product.promotion && (() => {
             const minPrice = Math.min(...product.variants.map(v => v.price))
             const originalTotal = minPrice * product.promotion!.quantity

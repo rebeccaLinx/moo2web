@@ -132,7 +132,15 @@
   text-transform: uppercase;
   margin-top: 6px;
 }
-.variants { display: flex; flex-direction: column; gap: 8px; }
+.variants { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
+.variantGroupLabel {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: var(--sky);
+  text-transform: uppercase;
+  margin: 4px 0 2px;
+}
 .variantRow {
   display: flex;
   align-items: center;
