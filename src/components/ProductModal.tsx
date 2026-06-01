@@ -137,6 +137,24 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
           <h2 className={styles.name}>{product.name}</h2>
           <p className={styles.desc}>{product.description}</p>
 
+          {product.colors.length > 0 && (
+            <>
+              <p className={styles.sectionLabel}>顏色選項</p>
+              <div className={styles.colors}>
+                {product.colors.map((c, i) => (
+                  <div
+                    key={c.name}
+                    className={`${styles.colorItem} ${i === selectedColorIdx ? styles.colorActive : ''}`}
+                    onClick={() => handleColorClick(i)}
+                  >
+                    <div className={styles.colorDot} style={{ background: hexToBackground(c.hex) }} title={c.name} />
+                    <span className={styles.colorName}>{c.name}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
           <p className={styles.sectionLabel}>款式與價格</p>
           {(() => {
             const categories: VariantCategory[] = ['earHook', 'earClip']
@@ -202,23 +220,6 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
             )
           })()}
 
-          {product.colors.length > 0 && (
-            <>
-              <p className={styles.sectionLabel}>顏色選項</p>
-              <div className={styles.colors}>
-                {product.colors.map((c, i) => (
-                  <div
-                    key={c.name}
-                    className={`${styles.colorItem} ${i === selectedColorIdx ? styles.colorActive : ''}`}
-                    onClick={() => handleColorClick(i)}
-                  >
-                    <div className={styles.colorDot} style={{ background: hexToBackground(c.hex) }} title={c.name} />
-                    <span className={styles.colorName}>{c.name}</span>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
         </div>
       </div>
     </div>,
