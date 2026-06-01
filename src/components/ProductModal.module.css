@@ -150,6 +150,10 @@
   border-color: var(--accent, #b07c5b);
   background: var(--paper-hover, #f5ede4);
 }
+.variantActive {
+  border-color: var(--accent, #b07c5b) !important;
+  background: var(--paper-hover, #f5ede4) !important;
+}
 .variantType { font-size: 0.88rem; font-weight: 500; color: var(--ink); }
 .variantPrice {
   font-family: var(--serif);

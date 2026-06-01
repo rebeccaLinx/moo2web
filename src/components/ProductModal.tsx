@@ -16,6 +16,7 @@ interface Props {
 export default function ProductModal({ product, onClose, initialColorIdx = -1 }: Props) {
   const [idx, setIdx] = useState(0)
   const [selectedColorIdx, setSelectedColorIdx] = useState(initialColorIdx)
+  const [selectedVariantIdx, setSelectedVariantIdx] = useState(-1)
 
   const allImages = useMemo(() => {
     const seen = new Set(product.images)
@@ -33,6 +34,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
     if (next >= 0 && next < allImages.length) {
       setIdx(next)
       setSelectedColorIdx(-1)
+      setSelectedVariantIdx(-1)
     }
   }, [allImages.length])
 
@@ -57,14 +59,18 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
 
   const handleColorClick = (i: number) => {
     setSelectedColorIdx(i)
+    setSelectedVariantIdx(-1)
     const image = product.colors[i]?.image
     if (!image) return
     const imgIdx = allImages.indexOf(image)
     if (imgIdx >= 0) setIdx(imgIdx)
   }
 
-  const handleVariantClick = (image: string | undefined) => {
+  const handleVariantClick = (i: number) => {
+    const image = product.variants[i]?.image
     if (!image) return
+    setSelectedVariantIdx(i)
+    setSelectedColorIdx(-1)
     const imgIdx = allImages.indexOf(image)
     if (imgIdx >= 0) setIdx(imgIdx)
   }
@@ -99,7 +105,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
               {allImages.map((src, i) => (
                 <Image key={src} className={`${styles.thumb} ${i === idx ? styles.thumbActive : ''}`}
                        src={imgPath(src)} alt={`縮圖 ${i + 1}`} width={56} height={56}
-                       onClick={() => { setIdx(i); setSelectedColorIdx(-1) }} />
+                       onClick={() => { setIdx(i); setSelectedColorIdx(-1); setSelectedVariantIdx(-1) }} />
               ))}
             </div>
           )}
@@ -115,11 +121,11 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
 
           <p className={styles.sectionLabel}>款式與價格</p>
           <div className={styles.variants}>
-            {product.variants.map(v => (
+            {product.variants.map((v, i) => (
               <div
                 key={v.type}
-                className={`${styles.variantRow} ${v.image ? styles.variantClickable : ''}`}
-                onClick={() => handleVariantClick(v.image)}
+                className={`${styles.variantRow} ${v.image ? styles.variantClickable : ''} ${i === selectedVariantIdx ? styles.variantActive : ''}`}
+                onClick={() => handleVariantClick(i)}
               >
                 <span className={styles.variantType}>{v.type}</span>
                 <span className={styles.variantPrice}>{v.price}</span>
