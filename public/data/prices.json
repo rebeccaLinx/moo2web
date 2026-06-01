@@ -31,9 +31,42 @@
       "tag": "熱銷",
       "promotion": { "quantity": 2, "price": 480 }
     },
+        {
+      "id": "whiteFlowerBall_1",
+      "name": "純白花球",
+      "images": [
+        "/images/whiteFlowerBall_1/s_08.jpg", "/images/whiteFlowerBall_1/s_06.jpg", 
+        "/images/whiteFlowerBall_1/s_01.jpg", "/images/whiteFlowerBall_1/s_05.jpg", 
+        "/images/whiteFlowerBall_1/s_07.jpg", "/images/whiteFlowerBall_1/s_02.jpg", 
+        "/images/whiteFlowerBall_1/s_03.jpg", "/images/whiteFlowerBall_1/s_04.jpg"
+      ],
+      "description": "純白花球，簡約優雅",
+      "variants": [
+        { "type": "吊墜+耳勾", "price": 1500, "image": "/images/whiteFlowerBall_1/s_08.jpg"},
+        { "type": "無吊墜+耳勾", "price": 1450, "image": "/images/whiteFlowerBall_1/s_07.jpg" }
+      ],
+      "colors": [
+        { "name": "白", "hex": "#ffffff" }
+      ],
+      "tag": "熱銷"
+    },
+        {
+      "id": "goldFlower3_1",
+      "name": "金色絕美花球-3線",
+      "images": [
+        "/images/goldFlower3_1/s1.jpg", "/images/goldFlower3_1/s2.jpg", 
+        "/images/goldFlower3_1/s3.jpg", "/images/goldFlower3_1/s4.jpg"],
+      "description": "金色線條交織成的絕美花球，華麗首選",
+      "variants": [
+        { "type": "耳勾", "price": 1580 }
+      ],
+      "colors": [
+        { "name": "金色", "hex": "#FEEC41" }
+      ]
+    },
     {
       "id": "goldflowerball_1",
-      "name": "金色透明花球",
+      "name": "金色透明花球-單線",
       "images": [
         "/images/goldflowerball_1/s2.jpg", 
         "/images/goldflowerball_1/s1.jpg",
@@ -68,49 +101,22 @@
       "tag": "熱銷"
     },
     {
-      "id": "shell-bow",
-      "name": "貝殼蝴蝶結耳環",
-      "images": ["/images/film3.png"],
-      "description": "天然貝殼材質，蝴蝶結造型，少女感十足",
+      "id": "orangeMix_1",
+      "name": "腮紅系列-橘",
+      "images": [
+        "/images/orangeMix_1/t1.jpg", "/images/orangeMix_1/t4.jpg", 
+        "/images/orangeMix_1/t3.jpg", "/images/orangeMix_1/t2.jpg"
+      ],
+      "description": "腮紅感覺的漸層橘色，帶點微微的金色光澤",
       "variants": [
-        { "type": "耳夾", "price": 350 },
-        { "type": "耳針", "price": 320 }
+        { "type": "耳勾", "price": 1300 }
       ],
       "colors": [
-        { "name": "貝白", "hex": "#EDE8DE" },
-        { "name": "淡藍", "hex": "#B8D4E8" },
-        { "name": "玫瑰", "hex": "#E8B4B8" }
+        { "name": "橘", "hex": "#ff6c00" }
       ],
-      "tag": "新品"
-    },
-    {
-      "id": "sapphire-round",
-      "name": "圓形藍寶石耳環",
-      "images": ["/images/exellent.png"],
-      "description": "深藍色仿寶石，古典優雅氣質",
-      "variants": [
-        { "type": "耳針", "price": 420 }
-      ],
-      "colors": [
-        { "name": "深藍", "hex": "#1e3a5f" },
-        { "name": "寶藍", "hex": "#0047AB" }
-      ],
-      "tag": "新品"
-    },
-    {
-      "id": "pearl-hoop",
-      "name": "細圈珍珠耳環",
-      "images": ["/images/down-arrow.png"],
-      "description": "細金圈搭配小珍珠，極簡百搭款",
-      "variants": [
-        { "type": "耳針", "price": 290 },
-        { "type": "耳夾", "price": 310 }
-      ],
-      "colors": [
-        { "name": "金色", "hex": "#C9A84C" },
-        { "name": "銀色", "hex": "#B8C0CC" }
-      ],
-      "tag": ""
+      "sizes": [
+        { "name": "中"}
+      ]
     }
   ]
 }
