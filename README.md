@@ -340,7 +340,7 @@ Hero 區塊，頁面最頂部。包含品牌名、副標、詩意標語、IG 按
 
 **篩選 Tab：**
 
-```
+```text
 全部  ｜  耳勾/耳針  ｜  耳夾
 ```
 
@@ -479,7 +479,7 @@ npm run lint    # ESLint 檢查
 
 ### 自動部署流程
 
-```
+```text
 git push → GitHub → 觸發 Actions → npm build → 上傳 out/ → GitHub Pages
 ```
 

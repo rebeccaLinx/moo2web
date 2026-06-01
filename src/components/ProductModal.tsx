@@ -15,11 +15,6 @@ interface Props {
 }
 
 export default function ProductModal({ product, onClose, initialColorIdx = -1 }: Props) {
-  const [idx, setIdx] = useState(0)
-  const [selectedColorIdx, setSelectedColorIdx] = useState(initialColorIdx)
-  const [selectedVariantIdx, setSelectedVariantIdx] = useState(-1)
-  const [selectedSizeIdx, setSelectedSizeIdx] = useState(-1)
-
   const allImages = useMemo(() => {
     const seen = new Set(product.images)
     const extra: string[] = []
@@ -35,6 +30,20 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
     return [...product.images, ...extra]
   }, [product])
 
+  const [idx, setIdx] = useState(() => {
+    const initImage = initialColorIdx >= 0 ? product.colors[initialColorIdx]?.image : undefined
+    const initIdx = initImage ? allImages.indexOf(initImage) : 0
+    return initIdx >= 0 ? initIdx : 0
+  })
+  const [selectedColorIdx, setSelectedColorIdx] = useState(initialColorIdx)
+  const [selectedVariantIdx, setSelectedVariantIdx] = useState(-1)
+  const [selectedSizeIdx, setSelectedSizeIdx] = useState(-1)
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
   const go = useCallback((next: number) => {
     if (next >= 0 && next < allImages.length) {
       setIdx(next)
@@ -43,15 +52,6 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
       setSelectedSizeIdx(-1)
     }
   }, [allImages.length])
-
-  useEffect(() => {
-    setSelectedColorIdx(initialColorIdx)
-    const initImage = initialColorIdx >= 0 ? product.colors[initialColorIdx]?.image : undefined
-    const initIdx = initImage ? allImages.indexOf(initImage) : 0
-    setIdx(initIdx >= 0 ? initIdx : 0)
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = '' }
-  }, [product, initialColorIdx, allImages])
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -74,11 +74,11 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
   }
 
   const handleVariantClick = (i: number) => {
-    const image = product.variants[i]?.image
-    if (!image) return
     setSelectedVariantIdx(i)
     setSelectedColorIdx(-1)
     setSelectedSizeIdx(-1)
+    const image = product.variants[i]?.image
+    if (!image) return
     const imgIdx = allImages.indexOf(image)
     if (imgIdx >= 0) setIdx(imgIdx)
   }
@@ -142,14 +142,16 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
               <p className={styles.sectionLabel}>顏色選項</p>
               <div className={styles.colors}>
                 {product.colors.map((c, i) => (
-                  <div
+                  <button
+                    type="button"
                     key={c.name}
                     className={`${styles.colorItem} ${i === selectedColorIdx ? styles.colorActive : ''}`}
                     onClick={() => handleColorClick(i)}
+                    aria-pressed={i === selectedColorIdx}
                   >
                     <div className={styles.colorDot} style={{ background: hexToBackground(c.hex) }} title={c.name} />
                     <span className={styles.colorName}>{c.name}</span>
-                  </div>
+                  </button>
                 ))}
               </div>
             </>
@@ -172,14 +174,16 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
                     <p className={styles.variantGroupLabel}>{CATEGORY_LABEL[cat]}</p>
                   )}
                   {group.map(({ v, i }) => (
-                    <div
+                    <button
+                      type="button"
                       key={v.type}
-                      className={`${styles.variantRow} ${v.image ? styles.variantClickable : ''} ${i === selectedVariantIdx ? styles.variantActive : ''}`}
+                      className={`${styles.variantRow} ${styles.variantClickable} ${i === selectedVariantIdx ? styles.variantActive : ''}`}
                       onClick={() => handleVariantClick(i)}
+                      aria-pressed={i === selectedVariantIdx}
                     >
                       <span className={styles.variantType}>{v.type}</span>
                       <span className={styles.variantPrice}>{v.price}</span>
-                    </div>
+                    </button>
                   ))}
                 </div>
               )
@@ -190,14 +194,16 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
               <p className={styles.sectionLabel}>尺寸</p>
               <div className={styles.variants}>
                 {product.sizes.map((s, i) => (
-                  <div
+                  <button
+                    type="button"
                     key={s.name}
                     className={`${styles.variantRow} ${s.image ? styles.variantClickable : ''} ${i === selectedSizeIdx ? styles.variantActive : ''}`}
                     onClick={() => handleSizeClick(i)}
+                    aria-pressed={i === selectedSizeIdx}
                   >
                     <span className={styles.variantType}>{s.name}</span>
                     {s.price != null && <span className={styles.variantPrice}>{s.price}</span>}
-                  </div>
+                  </button>
                 ))}
               </div>
             </>

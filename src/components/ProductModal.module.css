@@ -149,6 +149,8 @@
   border-radius: 10px;
   background: var(--paper);
   border: 1px solid var(--line);
+  width: 100%;
+  text-align: left;
 }
 .variantClickable {
   cursor: pointer;
@@ -171,7 +173,7 @@
 }
 .variantPrice::before { content: 'NT$ '; font-size: 0.72rem; font-weight: 400; color: var(--sky); font-family: var(--sans); }
 .colors { display: flex; gap: 12px; flex-wrap: wrap; }
-.colorItem { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.colorItem { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0; background: transparent; border: none; }
 .colorDot {
   width: 24px; height: 24px;
   border-radius: 50%;
