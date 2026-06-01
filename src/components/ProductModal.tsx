@@ -19,7 +19,10 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
   const images = product.images
 
   const go = useCallback((next: number) => {
-    if (next >= 0 && next < images.length) setIdx(next)
+    if (next >= 0 && next < images.length) {
+      setIdx(next)
+      setSelectedColorIdx(-1)
+    }
   }, [images.length])
 
   useEffect(() => {
@@ -80,7 +83,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
               {images.map((src, i) => (
                 <Image key={i} className={`${styles.thumb} ${i === idx ? styles.thumbActive : ''}`}
                        src={imgPath(src)} alt={`縮圖 ${i + 1}`} width={56} height={56}
-                       onClick={() => setIdx(i)} />
+                       onClick={() => { setIdx(i); setSelectedColorIdx(-1) }} />
               ))}
             </div>
           )}
