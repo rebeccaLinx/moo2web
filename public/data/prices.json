@@ -22,8 +22,8 @@
         { "name": "黑粉", "hex": ["#F39EB6", "#080616"], "image": "/images/smallFlower/p3.jpg" },
         { "name": "黃", "hex": "#FEEC41", "image": "/images/smallFlower/y1.jpg" },
         { "name": "紅", "hex": "#D51C39", "image": "/images/smallFlower/r1.jpg" },
-        { "name": "淺藍", "hex": "#4BB8FA", "image": "/images/smallFlower/b1.jpg" },
-        { "name": "深藍", "hex": "#111844", "image": "/images/smallFlower/b2.jpg" }
+        { "name": "淺藍", "hex": "#4BB8FA", "image": "/images/smallFlower/b2.jpg" },
+        { "name": "深藍", "hex": "#111844", "image": "/images/smallFlower/b1.jpg" }
       ],
       "tag": "熱銷",
       "promotion": { "quantity": 2, "price": 480 }
