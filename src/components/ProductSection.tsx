@@ -81,12 +81,8 @@ export default function ProductSection({ products }: { products: Product[] }) {
           /* Single filtered section */
           <section className={styles.section}>
             <div className={styles.secHead}>
-              <h2 className={styles.secTitle}>
-                {filter !== 'all' ? CATEGORY_LABEL[filter] : ''}
-              </h2>
-              <span className={styles.secEn}>
-                {filter !== 'all' ? CATEGORY_EN[filter] : ''}
-              </span>
+              <h2 className={styles.secTitle}>{CATEGORY_LABEL[filter]}</h2>
+              <span className={styles.secEn}>{CATEGORY_EN[filter]}</span>
               <span className={styles.secRule} />
             </div>
             <div className={styles.grid}>
