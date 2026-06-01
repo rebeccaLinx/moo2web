@@ -1,6 +1,7 @@
 export interface Variant {
-  type: '耳夾' | '耳針'
+  type: string
   price: number
+  image?: string
 }
 
 export interface Color {

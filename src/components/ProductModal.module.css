@@ -142,6 +142,14 @@
   background: var(--paper);
   border: 1px solid var(--line);
 }
+.variantClickable {
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.variantClickable:hover {
+  border-color: var(--accent, #b07c5b);
+  background: var(--paper-hover, #f5ede4);
+}
 .variantType { font-size: 0.88rem; font-weight: 500; color: var(--ink); }
 .variantPrice {
   font-family: var(--serif);

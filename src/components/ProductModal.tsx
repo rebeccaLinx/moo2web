@@ -58,6 +58,12 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
     if (imgIdx >= 0) setIdx(imgIdx)
   }
 
+  const handleVariantClick = (image: string | undefined) => {
+    if (!image) return
+    const imgIdx = allImages.indexOf(image)
+    if (imgIdx >= 0) setIdx(imgIdx)
+  }
+
   const mainSrc = allImages[idx]
 
   return createPortal(
@@ -105,7 +111,11 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
           <p className={styles.sectionLabel}>款式與價格</p>
           <div className={styles.variants}>
             {product.variants.map(v => (
-              <div key={v.type} className={styles.variantRow}>
+              <div
+                key={v.type}
+                className={`${styles.variantRow} ${v.image ? styles.variantClickable : ''}`}
+                onClick={() => handleVariantClick(v.image)}
+              >
                 <span className={styles.variantType}>{v.type}</span>
                 <span className={styles.variantPrice}>{v.price}</span>
               </div>
