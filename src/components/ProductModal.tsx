@@ -18,10 +18,15 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
   const [selectedColorIdx, setSelectedColorIdx] = useState(initialColorIdx)
 
   const allImages = useMemo(() => {
-    const colorImgs = product.colors
-      .map(c => c.image)
-      .filter((img): img is string => !!img && !product.images.includes(img))
-    return [...product.images, ...colorImgs]
+    const seen = new Set(product.images)
+    const extra: string[] = []
+    for (const c of product.colors) {
+      if (c.image && !seen.has(c.image)) { seen.add(c.image); extra.push(c.image) }
+    }
+    for (const v of product.variants) {
+      if (v.image && !seen.has(v.image)) { seen.add(v.image); extra.push(v.image) }
+    }
+    return [...product.images, ...extra]
   }, [product])
 
   const go = useCallback((next: number) => {
