@@ -18,6 +18,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
   const [idx, setIdx] = useState(0)
   const [selectedColorIdx, setSelectedColorIdx] = useState(initialColorIdx)
   const [selectedVariantIdx, setSelectedVariantIdx] = useState(-1)
+  const [selectedSizeIdx, setSelectedSizeIdx] = useState(-1)
 
   const allImages = useMemo(() => {
     const seen = new Set(product.images)
@@ -28,6 +29,9 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
     for (const v of product.variants) {
       if (v.image && !seen.has(v.image)) { seen.add(v.image); extra.push(v.image) }
     }
+    for (const s of (product.sizes ?? [])) {
+      if (s.image && !seen.has(s.image)) { seen.add(s.image); extra.push(s.image) }
+    }
     return [...product.images, ...extra]
   }, [product])
 
@@ -36,6 +40,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
       setIdx(next)
       setSelectedColorIdx(-1)
       setSelectedVariantIdx(-1)
+      setSelectedSizeIdx(-1)
     }
   }, [allImages.length])
 
@@ -61,6 +66,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
   const handleColorClick = (i: number) => {
     setSelectedColorIdx(i)
     setSelectedVariantIdx(-1)
+    setSelectedSizeIdx(-1)
     const image = product.colors[i]?.image
     if (!image) return
     const imgIdx = allImages.indexOf(image)
@@ -72,6 +78,17 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
     if (!image) return
     setSelectedVariantIdx(i)
     setSelectedColorIdx(-1)
+    setSelectedSizeIdx(-1)
+    const imgIdx = allImages.indexOf(image)
+    if (imgIdx >= 0) setIdx(imgIdx)
+  }
+
+  const handleSizeClick = (i: number) => {
+    setSelectedSizeIdx(i)
+    setSelectedColorIdx(-1)
+    setSelectedVariantIdx(-1)
+    const image = product.sizes?.[i]?.image
+    if (!image) return
     const imgIdx = allImages.indexOf(image)
     if (imgIdx >= 0) setIdx(imgIdx)
   }
@@ -106,7 +123,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
               {allImages.map((src, i) => (
                 <Image key={src} className={`${styles.thumb} ${i === idx ? styles.thumbActive : ''}`}
                        src={imgPath(src)} alt={`縮圖 ${i + 1}`} width={56} height={56}
-                       onClick={() => { setIdx(i); setSelectedColorIdx(-1); setSelectedVariantIdx(-1) }} />
+                       onClick={() => { setIdx(i); setSelectedColorIdx(-1); setSelectedVariantIdx(-1); setSelectedSizeIdx(-1) }} />
               ))}
             </div>
           )}
@@ -150,6 +167,23 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
               )
             })
           })()}
+          {product.sizes?.length ? (
+            <>
+              <p className={styles.sectionLabel}>尺寸</p>
+              <div className={styles.variants}>
+                {product.sizes.map((s, i) => (
+                  <div
+                    key={s.name}
+                    className={`${styles.variantRow} ${s.image ? styles.variantClickable : ''} ${i === selectedSizeIdx ? styles.variantActive : ''}`}
+                    onClick={() => handleSizeClick(i)}
+                  >
+                    <span className={styles.variantType}>{s.name}</span>
+                    <span className={styles.variantPrice}>{s.price}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : null}
           {product.promotion && (() => {
             const minPrice = Math.min(...product.variants.map(v => v.price))
             const originalTotal = minPrice * product.promotion!.quantity

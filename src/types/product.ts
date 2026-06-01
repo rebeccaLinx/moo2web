@@ -10,6 +10,12 @@ export interface Color {
   image?: string
 }
 
+export interface Size {
+  name: string
+  price: number
+  image?: string
+}
+
 export interface Promotion {
   quantity: number
   price: number
@@ -22,6 +28,7 @@ export interface Product {
   description: string
   variants: Variant[]
   colors: Color[]
+  sizes?: Size[]
   tag: string
   promotion?: Promotion
 }
