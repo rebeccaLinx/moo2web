@@ -16,7 +16,7 @@
 7. [元件文件](#7-元件文件)
 8. [本地開發](#8-本地開發)
 9. [部署到-github-pages](#9-部署到-github-pages)
-10. [內容更新指南](#10-內容更新指南)（含顏色換圖、雙色色塊、優惠活動）
+10. [內容更新指南](#10-內容更新指南)
 11. [常見問題](#11-常見問題)
 
 ---
@@ -27,8 +27,8 @@ moo2.tw 是一個純靜態的耳環品牌價目展示網站，特色：
 
 - **零後端**：所有商品資料存放在一個 JSON 檔，不需資料庫或伺服器
 - **一鍵更新**：只需修改 `public/data/prices.json` 並 push，GitHub Actions 自動重新部署
-- **日系設計**：明朝體 × 圓體字型、藍色系配色、金色點綴、紙質紋理背景
-- **完整互動**：商品圖片燈箱、多圖輪播、耳夾/耳針篩選、顏色色卡
+- **日系設計**：明朝體 × 圓體字型、藍色系配色、金色點綴
+- **完整互動**：商品圖片燈箱、多圖輪播、耳夾/耳勾篩選、顏色色卡、款式/尺寸選項
 
 **線上網址：** https://rebeccaLinx.github.io/moo2web/  
 **Instagram：** https://www.instagram.com/moo2.tw/  
@@ -40,8 +40,8 @@ moo2.tw 是一個純靜態的耳環品牌價目展示網站，特色：
 
 | 類別 | 技術 | 版本 | 說明 |
 |---|---|---|---|
-| 框架 | Next.js | 16.x | App Router，靜態輸出 |
-| UI 函式庫 | React | 19.x | 元件化介面 |
+| 框架 | Next.js | 16.2.6 | App Router，靜態輸出 |
+| UI 函式庫 | React | 19.2.4 | 元件化介面 |
 | 語言 | TypeScript | 5.x | 靜態型別 |
 | 樣式 | CSS Modules | — | 元件隔離樣式 |
 | 全域樣式 | CSS Variables | — | 設計 token 系統 |
@@ -65,8 +65,8 @@ moo2web/
 │   ├── data/
 │   │   └── prices.json         ← ★ 商品資料（唯一需要定期修改的檔案）
 │   └── images/                 ← 商品照片（對應 prices.json 的路徑）
-│       ├── moon.png
-│       ├── film3.png
+│       ├── smallFlower/
+│       ├── goldflowerball_1/
 │       └── ...
 │
 ├── src/
@@ -74,37 +74,28 @@ moo2web/
 │   │   ├── layout.tsx          ← 根佈局：HTML 結構、字型、metadata
 │   │   ├── page.tsx            ← 首頁：組合所有區塊
 │   │   ├── globals.css         ← 全域樣式：CSS 設計 token、reset、動畫
-│   │   ├── page.module.css     ← (Next.js 預設，目前未使用)
 │   │   └── favicon.ico
 │   │
 │   ├── components/
 │   │   ├── Header.tsx          ← Hero 區：品牌名、副標、IG 按鈕
-│   │   ├── Header.module.css
 │   │   ├── ProductSection.tsx  ← 商品主體：篩選 tab + 商品格
-│   │   ├── ProductSection.module.css
 │   │   ├── ProductCard.tsx     ← 商品卡片：圖片、色卡、價格
-│   │   ├── ProductCard.module.css
-│   │   ├── ProductModal.tsx    ← 燈箱彈窗：多圖輪播、款式、顏色
-│   │   ├── ProductModal.module.css
+│   │   ├── ProductModal.tsx    ← 燈箱彈窗：多圖輪播、顏色、款式、尺寸
 │   │   ├── IntroSection.tsx    ← 關於 moo2：深色漸層文字區塊
-│   │   ├── IntroSection.module.css
 │   │   ├── Footer.tsx          ← 頁尾：品牌名、IG 連結、版權
-│   │   └── Footer.module.css
+│   │   └── *.module.css        ← 各元件對應樣式
 │   │
 │   ├── lib/
-│   │   ├── imgPath.ts          ← ★ GitHub Pages basePath helper（見第 9 節）
-│   │   └── hexToBackground.ts  ← 單色/雙色 hex 轉 CSS background 字串
+│   │   ├── imgPath.ts          ← GitHub Pages basePath helper
+│   │   ├── hexToBackground.ts  ← 單色/雙色 hex 轉 CSS background
+│   │   └── variantCategory.ts  ← 款式分類（耳勾/耳針 vs 耳夾）
 │   │
 │   └── types/
 │       └── product.ts          ← TypeScript 型別定義
 │
-├── docs/
-│   └── superpowers/plans/      ← 實作計畫文件（供開發參考）
-│
 ├── next.config.ts              ← Next.js 設定（靜態輸出、basePath）
-├── tsconfig.json               ← TypeScript 設定
-├── package.json                ← 依賴套件與 npm 指令
-└── .gitignore
+├── tsconfig.json
+└── package.json
 ```
 
 ### 重要檔案對應
@@ -113,7 +104,7 @@ moo2web/
 |---|---|
 | 新增/修改商品、價格 | `public/data/prices.json` |
 | 新增商品照片 | `public/images/` |
-| 修改品牌標語、IG 連結 | `public/data/prices.json` → `instagram` 欄位；標語在 `src/components/Header.tsx` |
+| 修改品牌標語、IG 連結 | `public/data/prices.json` → `instagram`；標語在 `Header.tsx` |
 | 調整顏色主題 | `src/app/globals.css` → `:root` 區塊 |
 | 修改頁面版型 | 對應的 `*.tsx` + `*.module.css` |
 
@@ -145,7 +136,7 @@ src/app/page.tsx  ← Server Component，import JSON，傳入 props
 | `IntroSection` | Server | 純展示，無狀態 |
 | `Footer` | Server | 純展示，無狀態 |
 | `ProductSection` | Client | 管理篩選狀態、開啟 modal 狀態 |
-| `ProductCard` | Client | IntersectionObserver 捲動淡入、圖片錯誤狀態 |
+| `ProductCard` | Client | IntersectionObserver 捲動淡入、顏色選取狀態 |
 | `ProductModal` | Client | 鍵盤事件、圖片索引狀態、`document.body.style` |
 
 > **規則**：只有「需要 `useState`、`useEffect`、事件監聽」的元件才加 `'use client'`。
@@ -163,7 +154,7 @@ next.config.ts
 ```
 
 本地開發時 `basePath` 為空（`''`），可直接用 `localhost:3000` 開啟。  
-只有在 GitHub Actions CI 環境中（`GITHUB_ACTIONS=true`）才會套用 `/moo2web` 前綴。
+只有在 GitHub Actions CI 環境中（`GITHUB_ACTIONS=true`）才套用 `/moo2web` 前綴。
 
 ---
 
@@ -171,7 +162,7 @@ next.config.ts
 
 ### 5.1 色彩 Token
 
-定義在 `src/app/globals.css` → `:root` 區塊：
+定義在 `src/app/globals.css` → `:root`：
 
 ```css
 --ink:    #1b2a4a;   /* 深藍墨，主要文字 */
@@ -181,25 +172,25 @@ next.config.ts
 --mist:   #dce8f4;   /* 霧藍，邊框、hover 背景 */
 --paper:  #f4f8fc;   /* 紙白，頁面背景 */
 --cloud:  #ffffff;   /* 純白，卡片背景 */
---gold:   #c9a24b;   /* 金色，品牌點綴（分隔線、badge、dot） */
+--gold:   #c9a24b;   /* 金色，品牌點綴 */
 --accent: #3a5a8c;   /* 深靛，IG 按鈕 hover */
---line:   #cdddee;   /* 淡藍線條，卡片邊框、分隔線 */
+--line:   #cdddee;   /* 淡藍線條，卡片邊框 */
 ```
 
 ### 5.2 字型系統
 
 ```css
---serif: "Shippori Mincho", serif;   /* 明朝體：品牌名、標題、價格 */
+--serif: "Shippori Mincho", serif;       /* 明朝體：品牌名、標題、價格 */
 --sans:  "Zen Maru Gothic", sans-serif;  /* 圓體：內文、按鈕、描述 */
 ```
 
-字型透過 `layout.tsx` 中的 `<link>` 從 Google Fonts 載入（runtime），不影響 build。
+字型透過 `layout.tsx` 的 `<link>` 從 Google Fonts 載入（runtime），不影響 build。
 
 ### 5.3 間距與形狀
 
 ```css
---radius: 18px;   /* 卡片圓角 */
---shadow: 0 4px 18px rgba(45, 74, 124, .07);  /* 卡片陰影 */
+--radius: 18px;
+--shadow: 0 4px 18px rgba(45, 74, 124, .07);
 ```
 
 ### 5.4 動畫
@@ -209,7 +200,6 @@ next.config.ts
 | `fadeUp` (CSS keyframe) | `globals.css` | `Header`：印章、品牌名、標語依序淡入 |
 | 捲動淡入 | `ProductCard.tsx` → IntersectionObserver | 每張卡片進入視窗時從下方淡入，間隔 80ms |
 | hover 浮起 | `ProductCard.module.css` | 商品卡 `translateY(-7px)` |
-| modal 淡入 | `ProductModal.module.css` | 背景遮罩 rgba 透明度 |
 
 ---
 
@@ -227,28 +217,32 @@ next.config.ts
 }
 ```
 
-### 商品物件結構
+### 商品物件完整範例
 
 ```json
 {
-  "id": "唯一英文 ID，不可重複",
-  "name": "商品名稱",
+  "id": "small-flowers",
+  "name": "迷你小花花",
   "images": [
-    "/images/總覽照.jpg",
-    "/images/顏色A照.jpg",
-    "/images/顏色B照.jpg"
+    "/images/smallFlower/s1.jpg",
+    "/images/smallFlower/s2.jpg"
   ],
-  "description": "商品描述",
+  "description": "超可愛迷你小花花",
   "variants": [
-    { "type": "耳夾", "price": 350 },
-    { "type": "耳針", "price": 320 }
+    { "type": "耳夾", "price": 250 },
+    { "type": "耳針", "price": 250 },
+    { "type": "無吊墜+耳勾", "price": 350, "image": "/images/smallFlower/hook.jpg" }
   ],
   "colors": [
-    { "name": "顏色A", "hex": "#色碼", "image": "/images/顏色A照.jpg" },
-    { "name": "雙色", "hex": ["#色碼1", "#色碼2"] }
+    { "name": "白", "hex": "#F0EDE8", "image": "/images/smallFlower/w1.jpg" },
+    { "name": "黑粉", "hex": ["#F39EB6", "#080616"] }
+  ],
+  "sizes": [
+    { "name": "小 (5mm)", "price": 250 },
+    { "name": "大 (8mm)", "price": 300, "image": "/images/smallFlower/large.jpg" }
   ],
   "tag": "熱銷",
-  "promotion": { "quantity": 2, "price": 580 }
+  "promotion": { "quantity": 2, "price": 480 }
 }
 ```
 
@@ -258,13 +252,19 @@ next.config.ts
 |---|---|---|---|
 | `id` | string | ✅ | 唯一識別碼，英文+連字號，不可重複 |
 | `name` | string | ✅ | 商品中文名稱 |
-| `images` | string[] | ✅ | 圖片路徑陣列；`images[0]` 為預設顯示圖；填 `[]` 顯示 SVG 佔位插圖 |
-| `description` | string | ✅ | 商品描述（顯示在卡片和彈窗） |
-| `variants` | Variant[] | ✅ | 至少一筆；type 只能是 `"耳夾"` 或 `"耳針"` |
-| `variants[].price` | number | ✅ | 新台幣，純數字不含 NT$ |
+| `images` | string[] | ✅ | 主圖陣列；`images[0]` 為預設顯示圖；填 `[]` 顯示 SVG 佔位插圖 |
+| `description` | string | ✅ | 商品描述（卡片和彈窗皆顯示） |
+| `variants` | Variant[] | ✅ | 至少一筆，款式與售價 |
+| `variants[].type` | string | ✅ | 款式名稱，任意字串（如 `"耳夾"`、`"無吊墜+耳勾"`） |
+| `variants[].price` | number | ✅ | 新台幣，純數字 |
+| `variants[].image` | string | — | 選填；點擊此款式時跳至對應圖片 |
 | `colors` | Color[] | ✅ | 可為空陣列 `[]`（不顯示色卡） |
 | `colors[].hex` | string \| [string, string] | ✅ | 單色：`"#rrggbb"`；雙色：`["#色1", "#色2"]`（左右各半） |
-| `colors[].image` | string | — | 選填；點擊此色塊時切換到的圖片路徑，須為 `images[]` 中的值 |
+| `colors[].image` | string | — | 選填；點擊色塊時主圖切換，**不需在 `images[]` 中預先列出** |
+| `sizes` | Size[] | — | 選填；尺寸選項，有填才顯示 |
+| `sizes[].name` | string | ✅ | 尺寸名稱，如 `"小 (5mm)"` |
+| `sizes[].price` | number | — | 選填；有填才在 Modal 顯示價格 |
+| `sizes[].image` | string | — | 選填；點擊此尺寸時跳至對應圖片 |
 | `tag` | string | ✅ | 標籤文字；不想顯示填 `""` |
 | `promotion` | object | — | 選填；`{ quantity: 數量, price: 優惠總價 }` |
 
@@ -283,19 +283,26 @@ next.config.ts
 
 ```typescript
 export interface Variant {
-  type: '耳夾' | '耳針'
+  type: string         // 款式名稱（任意字串）
   price: number
+  image?: string       // 選填，點款式時跳至此圖
 }
 
 export interface Color {
   name: string
-  hex: string | [string, string]   // 單色或雙色
-  image?: string                    // 選填，點色塊時切換到此圖
+  hex: string | [string, string]   // 單色或雙色漸層
+  image?: string                   // 選填，點色塊時切換主圖
+}
+
+export interface Size {
+  name: string
+  price?: number       // 選填，沒有價差可省略
+  image?: string       // 選填，點尺寸時跳至此圖
 }
 
 export interface Promotion {
-  quantity: number   // 優惠數量
-  price: number      // 優惠總價
+  quantity: number     // 優惠數量
+  price: number        // 優惠總價
 }
 
 export interface Product {
@@ -305,14 +312,9 @@ export interface Product {
   description: string
   variants: Variant[]
   colors: Color[]
+  sizes?: Size[]       // 選填
   tag: string
   promotion?: Promotion
-}
-
-export interface PriceData {
-  intro: string
-  instagram: string
-  products: Product[]
 }
 ```
 
@@ -322,126 +324,119 @@ export interface PriceData {
 
 ### Header
 
-**檔案：** `src/components/Header.tsx`  
-**類型：** Server Component  
+**檔案：** `src/components/Header.tsx` ｜ **類型：** Server Component  
 **Props：** `{ instagram: string }`
 
-Hero 區塊，頁面最頂部。包含：
-- **品牌名**：`moo2.tw`，明朝體，金色句點，`fadeUp` 動畫 (0.1s delay)
-- **副標**：`手作耳飾`，`fadeUp` 動畫 (0.2s delay)
-- **詩意標語**：`fadeUp` 動畫 (0.3s delay)
-- **IG 按鈕**：內嵌 SVG 圖示，hover 深色，`fadeUp` 動畫 (0.4s delay)
-- **分隔線**：左右漸層線 + 金色菱形
+Hero 區塊，頁面最頂部。包含品牌名、副標、詩意標語、IG 按鈕、金色分隔線，各元素依序 `fadeUp` 淡入。
 
-修改品牌標語：直接編輯 `Header.tsx` 中的 `<p className={styles.tagline}>` 內容。
+修改標語：編輯 `Header.tsx` 中的 `<p className={styles.tagline}>` 內容。
 
 ---
 
 ### ProductSection
 
-**檔案：** `src/components/ProductSection.tsx`  
-**類型：** Client Component (`'use client'`)  
+**檔案：** `src/components/ProductSection.tsx` ｜ **類型：** Client Component  
 **Props：** `{ products: Product[] }`
+
+**篩選 Tab：**
+
+```
+全部  ｜  耳勾/耳針  ｜  耳夾
+```
+
+分類邏輯由 `src/lib/variantCategory.ts` 的 `getVariantCategory()` 決定：
+- type 字串含 `"耳勾"` 或 `"耳針"` → `earHook`（耳勾/耳針）
+- 其餘 → `earClip`（耳夾）
+
+**篩選行為：**
+- `全部`：按 耳勾/耳針 → 耳夾 順序分組，每組有 section 標題
+- 單一 tab：只顯示包含該分類 variant 的商品
 
 **狀態：**
 ```typescript
-const [filter, setFilter]     = useState<Filter>('all')   // 目前選中的篩選
-const [selected, setSelected] = useState<Product | null>(null)  // 開啟 modal 的商品
+const [filter, setFilter]     = useState<'all' | VariantCategory>('all')
+const [selected, setSelected] = useState<{ product: Product; colorIdx: number } | null>(null)
 ```
-
-**篩選邏輯：**
-- `filter === 'all'`：按 耳針 → 耳夾 順序分組，每組有 section 標題
-- `filter === '耳針'` 或 `'耳夾'`：只顯示包含該 variant 的商品（一個商品同時有耳夾和耳針時，在「全部」下兩區都會出現）
-
-**Sticky 導覽列：**
-```
-全部  ｜  耳針  ｜  耳夾
-```
-`backdrop-filter: blur(10px)` 毛玻璃效果，滾動時固定在頂部。
 
 ---
 
 ### ProductCard
 
-**檔案：** `src/components/ProductCard.tsx`  
-**類型：** Client Component (`'use client'`)  
-**Props：** `{ product: Product; onClick: () => void; index?: number }`
+**檔案：** `src/components/ProductCard.tsx` ｜ **類型：** Client Component  
+**Props：** `{ product: Product; onClick: (colorIdx: number) => void; index?: number }`
 
-**捲動淡入動畫：**
-```typescript
-useEffect(() => {
-  const observer = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => setVisible(true), (index % 4) * 80)  // 每列錯開 80ms
-    }
-  }, { threshold: 0.1 })
-  observer.observe(ref.current)
-}, [index])
-```
-卡片初始 `opacity: 0; transform: translateY(22px)`，進入視窗後加 `.show` class。
+**捲動淡入：** IntersectionObserver，每列錯開 80ms（`(index % 4) * 80`）
 
-**SVG 佔位圖：**  
-當 `images` 為空或圖片載入失敗時，顯示三種耳環線稿 SVG（圓形、三角、雙珠），顏色從 `colors[0].hex` 自動計算。
+**SVG 佔位圖：** `images` 為空或圖片載入失敗時，顯示藍色系耳環線稿，顏色從 `colors[0].hex` 自動計算
 
-**價格顯示邏輯：**
-- 只有一種 variant → 顯示固定價格：`NT$ 290`
-- 兩種 variants → 顯示最低價起：`NT$ 250 起`
+**價格邏輯：**
+- 單一 variant → 顯示固定價格
+- 多筆 variant → 顯示最低價 + 「起」
 
-**色塊點擊換圖：**
-- 初始顯示 `images[0]`（總覽圖）
-- 點擊有 `image` 欄位的顏色 → 切換到對應圖片
-- `selectedColorIdx` state 記錄選中的顏色，傳給 modal 作為 `initialColorIdx`
-
-**優惠 badge：**
-- 商品有 `promotion` 欄位時，在價格列下方顯示金色圓角 badge「買N件 NT$X」
+**色塊點擊：** 點擊有 `image` 的顏色 → 卡片主圖切換；`selectedColorIdx` 傳給 modal 作為 `initialColorIdx`
 
 ---
 
 ### ProductModal
 
-**檔案：** `src/components/ProductModal.tsx`  
-**類型：** Client Component (`'use client'`)  
+**檔案：** `src/components/ProductModal.tsx` ｜ **類型：** Client Component  
 **Props：** `{ product: Product; onClose: () => void; initialColorIdx?: number }`  
-**掛載位置：** `createPortal` → `document.body`（避免被 IntroSection 的 z-index 蓋住）
+**掛載：** `createPortal` → `document.body`
 
-**鍵盤操作：**
-| 按鍵 | 功能 |
+**Info 區塊順序：**
+1. 標籤（tag）
+2. 商品名稱
+3. 描述
+4. **顏色選項**（有顏色才顯示）
+5. **款式與價格**（依耳勾/耳針、耳夾分組；只有一個分類時不顯示分組標題）
+6. **尺寸**（有 `sizes` 才顯示）
+7. **優惠活動**（有 `promotion` 才顯示，自動計算節省金額）
+
+**allImages（縮圖來源）：** 自動合併 `product.images` + `colors[].image` + `variants[].image` + `sizes[].image`，去重後統一顯示於縮圖列。
+
+**互動狀態：**
+
+| 動作 | 效果 |
 |---|---|
-| `Esc` | 關閉彈窗 |
-| `←` `→` | 切換圖片 |
+| 點顏色（有 image） | 主圖跳至顏色圖；高亮顏色色塊；清除款式/尺寸選取 |
+| 點款式（有 image） | 主圖跳至款式圖；高亮款式行；清除顏色/尺寸選取 |
+| 點尺寸（有 image） | 主圖跳至尺寸圖；高亮尺寸行；清除顏色/款式選取 |
+| 點縮圖 / 箭頭 | 主圖切換；清除所有選取高亮 |
+| `←` / `→` 鍵 | 同點箭頭 |
+| `Esc` | 關閉 Modal |
 
-**圖片切換：**
-- `images.length === 1`：不顯示箭頭和縮圖列
-- `images.length > 1`：左右箭頭 + 下方縮圖列，首/末張箭頭自動 disabled
+**關閉方式：** 點背景遮罩 / ✕ 按鈕 / `Esc`
 
-**關閉方式：**
-- 點擊背景遮罩
-- 點擊右上角 ✕ 按鈕
-- 按 Esc
-
-**開啟時：** `document.body.style.overflow = 'hidden'`（防止背景滾動）  
-**關閉時：** 恢復 `overflow = ''`
+開啟時 `document.body.style.overflow = 'hidden'`，關閉後恢復。
 
 ---
 
 ### IntroSection
 
-**檔案：** `src/components/IntroSection.tsx`  
-**類型：** Server Component  
+**檔案：** `src/components/IntroSection.tsx` ｜ **類型：** Server Component  
 **Props：** `{ intro: string }`
 
-位於商品區塊下方，深藍漸層暗色卡片。文字來自 `prices.json → intro` 欄位。  
-背景有「藍」字水印（`::after` pseudo-element）和圓形金邊裝飾（`::before`）。
+深藍漸層暗色卡片，文字來自 `prices.json → intro`。含「藍」字水印和金邊圓形裝飾。
 
 ---
 
 ### Footer
 
-**檔案：** `src/components/Footer.tsx`  
-**類型：** Server Component  
+**檔案：** `src/components/Footer.tsx` ｜ **類型：** Server Component  
 **Props：** `{ instagram: string }`
 
-頁尾包含品牌名（金色句點）、IG 連結 × 2、版權文字。
+頁尾包含品牌名（金色句點）、IG 連結、版權文字。
+
+---
+
+### Lib Helpers
+
+| 檔案 | 函式 | 說明 |
+|---|---|---|
+| `imgPath.ts` | `imgPath(src)` | 補上 `NEXT_PUBLIC_BASE_PATH` 前綴（GitHub Pages 用） |
+| `hexToBackground.ts` | `hexToBackground(hex)` | 單色回傳 hex 字串；雙色回傳 `linear-gradient` |
+| `hexToBackground.ts` | `firstHex(hex)` | 取第一個色碼（用於 SVG 佔位圖著色） |
+| `variantCategory.ts` | `getVariantCategory(type)` | type 含 "耳勾"/"耳針" → `earHook`，其餘 → `earClip` |
 
 ---
 
@@ -451,9 +446,7 @@ useEffect(() => {
 
 - **Node.js** 18.0 以上（建議 20.x LTS）
 - **npm** 9.0 以上
-- **Git**
 
-版本確認：
 ```powershell
 node --version   # v20.x.x
 npm --version    # 10.x.x
@@ -462,21 +455,15 @@ npm --version    # 10.x.x
 ### 安裝與啟動
 
 ```powershell
-# 1. Clone 專案
 git clone https://github.com/rebeccaLinx/moo2web.git
 cd moo2web
-
-# 2. 安裝依賴
 npm install
-
-# 3. 啟動開發伺服器
 npm run dev
 ```
 
 開啟瀏覽器：`http://localhost:3000`
 
-> **注意：** 開發模式下 Hot Reload 自動生效，修改 `.tsx` 或 `.css` 後頁面即時更新。  
-> 但修改 `prices.json` 需重新整理頁面（`Ctrl+R`）才能看到變化。
+> 修改 `prices.json` 後需重新整理頁面（Next.js Fast Refresh 不偵測 JSON 異動）。
 
 ### 常用指令
 
@@ -486,280 +473,175 @@ npm run build   # 產生 out/ 靜態檔案
 npm run lint    # ESLint 檢查
 ```
 
-### 本地預覽靜態 build
-
-```powershell
-npm run build
-npx serve out   # 預覽 out/ 目錄
-```
-
-開啟：`http://localhost:3000`
-
 ---
 
 ## 9. 部署到 GitHub Pages
 
-### 9.1 自動部署流程
+### 自動部署流程
 
 ```
-你的電腦 → git push → GitHub → 觸發 Actions → npm build → 上傳 out/ → GitHub Pages
+git push → GitHub → 觸發 Actions → npm build → 上傳 out/ → GitHub Pages
 ```
 
-每次 `git push origin master` 都會自動觸發，約 2–3 分鐘完成部署。
+每次 `git push origin main` 自動觸發，約 2–3 分鐘完成。
 
-### 9.2 初次設定（只需做一次）
+### 初次設定（只需做一次）
 
 1. **啟用 GitHub Pages**  
-   前往 `https://github.com/rebeccaLinx/moo2web/settings/pages`  
-   → Source：選 **GitHub Actions**（不是 Branch）  
-   → 按 Save
+   `Settings → Pages → Source → GitHub Actions` → Save
 
 2. **確認 Actions 權限**  
-   前往 `Settings → Actions → General → Workflow permissions`  
-   → 選 **Read and write permissions**
+   `Settings → Actions → General → Workflow permissions → Read and write permissions`
 
-### 9.3 GitHub Actions 設定說明
-
-`.github/workflows/deploy.yml`：
-
-```yaml
-on:
-  push:
-    branches: [master]   # 只有 push 到 master 才觸發
-
-permissions:
-  pages: write           # 允許寫入 GitHub Pages
-  id-token: write        # 允許 OIDC 驗證
-
-jobs:
-  build-and-deploy:
-    steps:
-      - run: npm ci             # 安裝依賴（比 npm install 更快、更穩定）
-      - run: npm run build      # 產生 out/
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: './out'         # 上傳 out/ 目錄到 Pages
-      - uses: actions/deploy-pages@v4
-```
-
-### 9.4 手動 Push（繞過 Proxy）
-
-本機有 HTTP proxy（192.168.8.251:8181），需用以下指令：
+### 手動 Push（繞過 Proxy）
 
 ```powershell
-# 設定含 token 的 remote URL
 git remote set-url origin "https://$($env:GH_TOKEN)@github.com/rebeccaLinx/moo2web.git"
-
-# 繞過 proxy + 使用 Windows schannel 憑證
 git -c http.proxy="" -c http.sslBackend=schannel push -u origin main
 ```
-
-> `GH_TOKEN` 需要有 `repo` 權限，可在 GitHub → Settings → Developer settings → Personal access tokens 建立。
 
 ---
 
 ## 10. 內容更新指南
 
-### 10.1 修改品牌簡介
+### 10.1 新增商品
 
-編輯 `public/data/prices.json`，修改 `intro` 欄位：
-
-```json
-{
-  "intro": "新的品牌簡介文字..."
-}
-```
-
-### 10.2 新增商品
-
-在 `public/data/prices.json` → `products` 陣列新增一筆：
+在 `public/data/prices.json` → `products` 陣列新增：
 
 ```json
 {
   "id": "new-earring-2026",
-  "name": "新款耳環名稱",
+  "name": "新款耳環",
   "images": ["/images/new-photo.jpg"],
-  "description": "商品描述，1–2 行",
+  "description": "商品描述",
   "variants": [
     { "type": "耳夾", "price": 320 }
   ],
-  "colors": [
-    { "name": "玫瑰金", "hex": "#C9A084" }
-  ],
+  "colors": [],
   "tag": "新品"
 }
 ```
 
-**注意事項：**
-- `id` 必須唯一，建議用英文+連字號命名
-- 每筆之間要有逗號（最後一筆不加）
-- 照片放到 `public/images/`
+### 10.2 設定顏色對應圖片
 
-### 10.3 新增商品照片
-
-1. 照片建議規格：**正方形（1:1），最小 600×600px，JPG 或 WebP**
-2. 將照片複製到 `public/images/`
-3. 在 `prices.json` 對應商品的 `images` 填入路徑：
-   ```json
-   "images": ["/images/你的照片.jpg"]
-   ```
-4. 多張照片（燈箱輪播）：
-   ```json
-   "images": [
-     "/images/商品正面.jpg",
-     "/images/商品側面.jpg",
-     "/images/配戴示意.jpg"
-   ]
-   ```
-
-### 10.4 修改商品價格
-
-找到對應商品，修改 `variants` 中的 `price`：
+顏色圖片**不需要**預先加入 `images[]`，Modal 會自動收入縮圖列：
 
 ```json
-"variants": [
-  { "type": "耳夾", "price": 380 },
-  { "type": "耳針", "price": 350 }
+"colors": [
+  { "name": "紅", "hex": "#D51C39", "image": "/images/product-red.jpg" },
+  { "name": "藍", "hex": "#4BB8FA", "image": "/images/product-blue.jpg" }
 ]
 ```
 
-### 10.5 設定顏色對應圖片
+### 10.3 設定款式對應圖片
 
-讓點擊色塊時自動切換到該顏色的商品圖片：
-
-1. 把各顏色的照片放入 `public/images/`
-2. 將所有圖片加入 `images[]`（第一張為預設顯示圖）
-3. 在對應顏色加上 `"image"` 欄位，值必須是 `images[]` 中的路徑
+讓點擊款式行時主圖跳至對應圖片（同樣不需預先加入 `images[]`）：
 
 ```json
-{
-  "images": [
-    "/images/product-all.jpg",
-    "/images/product-red.jpg",
-    "/images/product-blue.jpg"
-  ],
-  "colors": [
-    { "name": "紅", "hex": "#D51C39", "image": "/images/product-red.jpg" },
-    { "name": "藍", "hex": "#4BB8FA", "image": "/images/product-blue.jpg" }
-  ]
-}
+"variants": [
+  { "type": "無吊墜+耳勾", "price": 1380, "image": "/images/product-hook.jpg" },
+  { "type": "有吊墜+耳勾", "price": 1420, "image": "/images/product-hook-pendant.jpg" },
+  { "type": "耳夾", "price": 1400 }
+]
 ```
 
-沒有 `"image"` 欄位的顏色，點擊後只切換高亮，不換圖。
+### 10.4 新增尺寸選項
 
----
+```json
+"sizes": [
+  { "name": "小 (5mm)", "price": 250 },
+  { "name": "大 (8mm)", "price": 300, "image": "/images/product-large.jpg" }
+]
+```
 
-### 10.6 設定雙色色塊
+- `price` 選填，沒有價差可省略
+- `image` 選填，有填則點擊時主圖切換
 
-將 `hex` 改為包含兩個色碼的陣列，色塊會以左右各半方式顯示：
+### 10.5 設定雙色色塊
 
 ```json
 { "name": "黑粉", "hex": ["#111111", "#F2789F"] }
 ```
 
----
+色塊左右各半顯示兩色。
 
-### 10.7 設定優惠活動
-
-在商品物件加入 `promotion` 欄位：
+### 10.6 設定優惠活動
 
 ```json
-{
-  "id": "small-flowers",
-  "promotion": { "quantity": 2, "price": 580 }
-}
+"promotion": { "quantity": 2, "price": 480 }
 ```
 
 效果：
-- 商品卡顯示金色 badge「買2件 NT$580」
-- Modal 顯示優惠區塊，自動計算節省金額（`最低單價 × 數量 - 優惠價`）
-- 不設定 `promotion` 欄位 → 不顯示任何優惠元素
+- 卡片顯示金色 badge「買2件 NT$480」
+- Modal 顯示優惠區塊，自動計算節省金額
 
----
+### 10.7 下架商品
 
-### 10.9 下架商品
+直接從 `products` 陣列刪除整筆物件。
 
-直接從 `products` 陣列刪除整筆物件，並刪除對應照片（可選）。
+### 10.8 修改顏色 Token
 
-### 10.10 修改顏色 Token
+編輯 `src/app/globals.css` → `:root`，修改後需重新 build。
 
-如需調整整站配色，編輯 `src/app/globals.css` → `:root`：
+### 10.9 修改頁首標語
 
-```css
-:root {
-  --gold: #c9a24b;   /* 修改金色 */
-  --indigo: #2d4a7c; /* 修改靛藍 */
-}
-```
-
-修改後需重新 build（`npm run build`）。
-
-### 10.11 修改頁首標語
-
-編輯 `src/components/Header.tsx`，找到以下程式碼並修改：
-
-```tsx
-<p className={styles.tagline}>
-  以藍為調，手作每一副耳飾。<br />
-  把海與天空的清透，輕輕別在耳邊。
-</p>
-```
+編輯 `src/components/Header.tsx` → `<p className={styles.tagline}>` 內容。
 
 ---
 
 ## 11. 常見問題
 
 ### Q：修改了 prices.json，本地沒有看到變化？
-**A：** `prices.json` 是在 build time 匯入的，開發模式下需重啟 `npm run dev`，或直接重新整理頁面（有時 Next.js Fast Refresh 不會偵測 JSON 變更）。
+`prices.json` 是 build time 匯入，開發模式下需手動重新整理頁面（`Ctrl+R`）或重啟 `npm run dev`。
 
 ---
 
 ### Q：圖片顯示不出來？
-**A：** 請確認：
-1. 照片確實在 `public/images/` 資料夾內
-2. `prices.json` 路徑以 `/images/` 開頭（不是 `./images/` 或 `images/`）
+1. 確認照片在 `public/images/` 內
+2. 路徑以 `/images/` 開頭（不是 `./images/`）
 3. 檔名大小寫完全一致（Linux 伺服器區分大小寫）
-
-沒有照片時，系統會自動顯示藍色系耳環 SVG 插圖，不影響功能。
 
 ---
 
-### Q：本地 `npm run dev` 跑正常，但 GitHub Pages 圖片不顯示？
-**A：** Next.js 16 不自動將 `basePath` 加到 `next/image` 的 `src`。  
-所有圖片必須用 `imgPath()` helper 包住：
+### Q：本地正常，GitHub Pages 圖片不顯示？
+所有 `next/image` 的 `src` 必須用 `imgPath()` 包住：
+
 ```tsx
 import { imgPath } from '@/lib/imgPath'
 <Image src={imgPath(product.images[0])} ... />
 ```
+
 `imgPath()` 在 GitHub Actions 環境自動補 `/moo2web` 前綴，本機為空字串。
 
 ---
 
-### Q：點縮圖後主圖沒有切換？
-**A：** 已修正（commit `0f5c89d`）。原因是 `setIdx(0)` 和 keyboard handler 在同一個 `useEffect` 且 `idx` 在 deps 裡，導致切換時被重置。修法：拆成兩個獨立 `useEffect`。
+### Q：篩選「耳勾/耳針」tab 看不到某商品？
+確認 `variants` 中有 type 包含 `"耳勾"` 或 `"耳針"` 的款式。分類由 `getVariantCategory()` 判斷，不是硬比對 `"耳針"` 字串，`"無吊墜+耳勾"` 等也會正確歸類。
 
 ---
 
-### Q：新增了商品，但篩選「耳夾」時看不到？
-**A：** 確認 `variants` 中有 `{ "type": "耳夾", ... }`。篩選邏輯是根據 variants 類型，不是其他欄位。
+### Q：想讓商品同時出現在耳夾和耳勾/耳針兩個 section？
+在 `variants` 同時加入兩類款式：
 
----
-
-### Q：想讓商品同時出現在耳夾和耳針篩選結果中？
-**A：** 在 `variants` 陣列中同時加入兩筆：
 ```json
 "variants": [
   { "type": "耳夾", "price": 350 },
   { "type": "耳針", "price": 320 }
 ]
 ```
-篩選「全部」時，該商品會分別出現在耳針區和耳夾區兩個 section 中。
+
+「全部」模式下，該商品會分別出現在兩個 section。
+
+---
+
+### Q：點款式/尺寸/顏色後，縮圖沒有對應高亮？
+確認該項目有填 `"image"` 欄位，且圖片路徑正確。有 `image` 的項目點擊才會跳圖並高亮縮圖；沒有 `image` 的項目點擊只高亮選項行，不會切換主圖。
 
 ---
 
 ### Q：Google Fonts 字型沒載入？
-**A：** 字型需要瀏覽器能連上 `fonts.googleapis.com`。如果在某些網路環境下無法連線，網頁會 fallback 到系統 serif / sans-serif 字型，版面不受影響，只是沒有明朝體風格。
+字型需連上 `fonts.googleapis.com`。無法連線時 fallback 為系統 serif/sans-serif，版面不受影響。
 
 ---
 
-*文件版本：2026-05-29 ｜ moo2.tw Technical Documentation*
+*文件版本：2026-06-01 ｜ moo2.tw Technical Documentation*
