@@ -24,11 +24,11 @@
 }
 
 .about::after {
-  content: "藍";
+  content: "Handmade Accessory";
   position: absolute;
-  bottom: -30px; right: 30px;
+  bottom: 30px; right: 30px;
   font-family: var(--serif);
-  font-size: 200px;
+  font-size: 50px;
   color: rgba(255,255,255,.05);
   line-height: 1;
   pointer-events: none;

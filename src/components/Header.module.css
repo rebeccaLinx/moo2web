@@ -29,7 +29,7 @@
 }
 
 .brand {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: clamp(46px, 8vw, 82px);
   font-weight: 600;
   color: var(--ink);
@@ -41,12 +41,12 @@
 .dot { color: var(--gold); }
 
 .jp {
-  font-family: var(--serif);
-  font-size: clamp(14px, 2vw, 18px);
-  color: var(--blue);
-  letter-spacing: .5em;
-  margin-top: 18px;
-  text-indent: .5em;
+  font-family: var(--grape);
+  font-size: clamp(16px, 2.2vw, 20px);
+  font-style: italic;
+  color: var(--ink);
+  letter-spacing: .12em;
+  margin-top: 1px;
   animation: fadeUp 1s ease .2s both;
 }
 

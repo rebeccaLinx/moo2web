@@ -11,12 +11,14 @@ export default function Header({ instagram }: { instagram: string }) {
     <header className={styles.hero}>
       <div className={styles.wrap}>
         <h1 className={styles.brand}>
-          moo2<span className={styles.dot}>.</span>tw
+          MOO²<span className={styles.dot}>.</span>TW
         </h1>
-        <p className={styles.jp}>手作耳飾</p>
+        <p className={styles.jp}>Handmade Accessory</p>
         <p className={styles.tagline}>
-          以藍為調，手作每一副耳飾。<br />
-          把海與天空的清透，輕輕別在耳邊。
+          微光傾瀉，彷彿整片夜空都在你耳邊墜落<br />
+          如花瓣般綻放的耳環，如晨露般晶瑩的髮圈<br />
+          每件飾品都像是帶著故事的精靈，等待著找到自己的主人<br />
+          期許來到這裡的你，能遇見那個屬於自己的小奇蹟與小美好<br />
         </p>
         <a href={instagram} target="_blank" rel="noopener noreferrer" className={styles.igBtn}>
           <IgIcon />

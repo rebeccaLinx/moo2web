@@ -10,6 +10,8 @@
   --gold:   #c9a24b;
   --accent: #3a5a8c;
   --line:   #cdddee;
+  --display: var(--font-display), cursive;
+  --grape:   var(--font-grape), cursive;
   --serif:  "Shippori Mincho", serif;
   --sans:   "Zen Maru Gothic", sans-serif;
   --shadow: 0 4px 18px rgba(45, 74, 124, .07);
