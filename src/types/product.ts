@@ -12,7 +12,7 @@ export interface Color {
 
 export interface Size {
   name: string
-  price: number
+  price?: number
   image?: string
 }
 

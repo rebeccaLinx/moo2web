@@ -178,7 +178,7 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
                     onClick={() => handleSizeClick(i)}
                   >
                     <span className={styles.variantType}>{s.name}</span>
-                    <span className={styles.variantPrice}>{s.price}</span>
+                    {s.price != null && <span className={styles.variantPrice}>{s.price}</span>}
                   </div>
                 ))}
               </div>
