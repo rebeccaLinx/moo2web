@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import type { Product } from '@/types/product'
@@ -16,23 +16,29 @@ interface Props {
 export default function ProductModal({ product, onClose, initialColorIdx = -1 }: Props) {
   const [idx, setIdx] = useState(0)
   const [selectedColorIdx, setSelectedColorIdx] = useState(initialColorIdx)
-  const images = product.images
+
+  const allImages = useMemo(() => {
+    const colorImgs = product.colors
+      .map(c => c.image)
+      .filter((img): img is string => !!img && !product.images.includes(img))
+    return [...product.images, ...colorImgs]
+  }, [product])
 
   const go = useCallback((next: number) => {
-    if (next >= 0 && next < images.length) {
+    if (next >= 0 && next < allImages.length) {
       setIdx(next)
       setSelectedColorIdx(-1)
     }
-  }, [images.length])
+  }, [allImages.length])
 
   useEffect(() => {
     setSelectedColorIdx(initialColorIdx)
     const initImage = initialColorIdx >= 0 ? product.colors[initialColorIdx]?.image : undefined
-    const initIdx = initImage ? images.indexOf(initImage) : 0
+    const initIdx = initImage ? allImages.indexOf(initImage) : 0
     setIdx(initIdx >= 0 ? initIdx : 0)
     document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = '' }
-  }, [product, initialColorIdx, images])
+  }, [product, initialColorIdx, allImages])
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -48,12 +54,11 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
     setSelectedColorIdx(i)
     const image = product.colors[i]?.image
     if (!image) return
-    const imgIdx = images.indexOf(image)
+    const imgIdx = allImages.indexOf(image)
     if (imgIdx >= 0) setIdx(imgIdx)
   }
 
-  const activeColorImage = selectedColorIdx >= 0 ? product.colors[selectedColorIdx]?.image : undefined
-  const mainSrc = activeColorImage ?? images[idx]
+  const mainSrc = allImages[idx]
 
   return createPortal(
     <div className={styles.overlay} onClick={onClose} role="dialog" aria-modal="true">
@@ -63,25 +68,25 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
         {/* Gallery */}
         <div className={styles.gallery}>
           <div className={styles.mainWrap}>
-            {images.length > 0 ? (
+            {allImages.length > 0 ? (
               <Image className={styles.mainImg} src={imgPath(mainSrc)} alt={`${product.name} 圖片 ${idx + 1}`}
                      fill sizes="(max-width: 600px) 100vw, 380px" />
             ) : (
               <div className={styles.noImg}>✦</div>
             )}
-            {images.length > 1 && (
+            {allImages.length > 1 && (
               <>
                 <button className={`${styles.arrow} ${styles.prev}`} onClick={() => go(idx - 1)}
                         disabled={idx === 0} aria-label="上一張">&#8249;</button>
                 <button className={`${styles.arrow} ${styles.next}`} onClick={() => go(idx + 1)}
-                        disabled={idx === images.length - 1} aria-label="下一張">&#8250;</button>
+                        disabled={idx === allImages.length - 1} aria-label="下一張">&#8250;</button>
               </>
             )}
           </div>
-          {images.length > 1 && (
+          {allImages.length > 1 && (
             <div className={styles.thumbs}>
-              {images.map((src, i) => (
-                <Image key={i} className={`${styles.thumb} ${i === idx ? styles.thumbActive : ''}`}
+              {allImages.map((src, i) => (
+                <Image key={src} className={`${styles.thumb} ${i === idx ? styles.thumbActive : ''}`}
                        src={imgPath(src)} alt={`縮圖 ${i + 1}`} width={56} height={56}
                        onClick={() => { setIdx(i); setSelectedColorIdx(-1) }} />
               ))}
