@@ -31,7 +31,60 @@
       "tag": "熱銷",
       "promotion": { "quantity": 2, "price": 480 }
     },
-        {
+    {
+      "id": "littleDaisy_1",
+      "name": "小雛菊~超級無敵~可愛的小雛菊~",
+      "images": [
+        "/images/littleDaisy_1/s4.jpg", "/images/littleDaisy_1/s5.jpg", 
+        "/images/littleDaisy_1/sa1.jpg", "/images/littleDaisy_1/s1.jpg", 
+        "/images/littleDaisy_1/s2.jpg", "/images/littleDaisy_1/s3.jpg",
+        "/images/littleDaisy_1/s6.jpg", "/images/littleDaisy_1/s7.jpg"],
+      "description": "貼耳款的小雛菊耳釘, 絕對大大增加回頭率!!",
+      "variants": [
+        { "type": "耳針", "price": 980 }
+      ],
+      "colors": [
+        { "name": "銀色", "hex": "#C0C0C0" },
+        { "name": "金色", "hex": "#FEEC41", "image": "/images/littleDaisy_1/s1.jpg" }
+      ]
+    },
+    {
+      "id": "cube_blue_1",
+      "name": "小方塊耳釘~簡約日常~",
+      "images": [
+        "/images/cube_blue_1/s4.jpg", "/images/cube_blue_1/s5.jpg", 
+        "/images/cube_blue_1/s3.jpg"],
+      "description": "貼耳款的立方藍色耳環, 絕對大大增加回頭率!!",
+      "variants": [
+        { "type": "耳針", "price": 280 }
+      ],
+      "colors": [
+        { "name": "A款", "hex": "#F7F8F0", "image": "/images/cube_blue_1/s1.jpg" },
+        { "name": "B款", "hex": "#BFDDF0", "image": "/images/cube_blue_1/s2.jpg" }
+      ]
+    },
+    {
+      "id": "pinkFlowers_1",
+      "name": "粉色小花垂墜耳環",
+      "images": [
+        "/images/pinkFlowers_1/s7.jpg", "/images/pinkFlowers_1/s8.jpg", 
+        "/images/pinkFlowers_1/s5.jpg", "/images/pinkFlowers_1/s4.jpg", 
+        "/images/pinkFlowers_1/s3.jpg", "/images/pinkFlowers_1/s2.jpg", 
+        "/images/pinkFlowers_1/s1.jpg", "/images/pinkFlowers_1/s6.jpg"
+      ],
+      "description": "粉色小花垂墜耳環，浪漫甜美",
+      "variants": [
+        { "type": "耳勾+方形墜", "price": 1280 },
+        { "type": "耳勾+圓形墜", "price": 1280 }
+      ],
+      "colors": [
+        { "name": "粉", "hex": "#ffb0d7" }
+      ],
+      "sizes": [
+        { "name": "中"}
+      ]
+    },
+    {
       "id": "whiteFlowerBall_1",
       "name": "純白花球",
       "images": [
@@ -50,11 +103,11 @@
       ],
       "tag": "熱銷"
     },
-        {
+    {
       "id": "goldFlower3_1",
       "name": "金色絕美花球-3線",
       "images": [
-        "/images/goldFlower3_1/s1.jpg", "/images/goldFlower3_1/s2.jpg", 
+        "/images/goldFlower3_1/s1.jpg", "/images/goldFlower3_1/s2.jpg", "/images/goldFlower3_1/s5.jpg",
         "/images/goldFlower3_1/s3.jpg", "/images/goldFlower3_1/s4.jpg"],
       "description": "金色線條交織成的絕美花球，華麗首選",
       "variants": [
@@ -62,6 +115,50 @@
       ],
       "colors": [
         { "name": "金色", "hex": "#FEEC41" }
+      ]
+    },
+    {
+      "id": "MermaidShell_1",
+      "name": "美人魚貝殼",
+      "images": [
+        "/images/MermaidShell_1/s5.jpg", "/images/MermaidShell_1/s4.jpg", "/images/MermaidShell_1/s1.jpg",
+        "/images/MermaidShell_1/s2.jpg", "/images/MermaidShell_1/s3.jpg"],
+      "description": "美人魚貝殼造型，浪漫神秘",
+      "variants": [
+        { "type": "耳勾", "price": 890 }
+      ],
+      "colors": [
+        { "name": "粉", "hex": "#ffb0d7" }
+      ]
+    },
+    {
+      "id": "wireBead_1",
+      "name": "線語珠光系列",
+      "images": [
+        "/images/wireBead_1/s5.jpg", "/images/wireBead_1/s4.jpg", "/images/wireBead_1/s1.jpg",
+        "/images/wireBead_1/s2.jpg", "/images/wireBead_1/s3.jpg", "/images/wireBead_1/s6.jpg"
+      ],
+      "description": "銅線與米珠交織的獨特設計",
+      "variants": [
+        { "type": "耳勾", "price": 1380 }
+      ],
+      "colors": [
+        { "name": "金色", "hex": ["#FF3F33", "#075B5E"] }
+      ]
+    },
+    {
+      "id": "silverFlowerBall_1",
+      "name": "銀色透明~閃閃~閃爆眼~花球-單線",
+      "images": [
+        "/images/silverFlowerBall_1/s_1.jpg", "/images/silverFlowerBall_1/s_2.jpg", 
+        "/images/silverFlowerBall_1/s_4.jpg", "/images/silverFlowerBall_1/s_5.jpg", 
+        "/images/silverFlowerBall_1/s_6.jpg", "/images/silverFlowerBall_1/s_3.jpg"],
+      "description": "銀色線條交織成的絕美花球，華麗首選",
+      "variants": [
+        { "type": "耳勾", "price": 1400 }
+      ],
+      "colors": [
+        { "name": "銀色", "hex": "#C0C0C0" }
       ]
     },
     {
@@ -116,6 +213,23 @@
       ],
       "sizes": [
         { "name": "中"}
+      ]
+    },
+    {
+      "id": "hydrangea_1",
+      "name": "繡球花貼耳",
+      "images": [
+        "/images/hydrangea_1/s2.jpg", "/images/hydrangea_1/s3.jpg", "/images/hydrangea_1/s1.jpg",
+        "/images/hydrangea_1/s5.jpg"
+      ],
+      "description": "繡球花造型的貼耳，清新自然",
+      "variants": [
+        { "type": "耳針(無墜)", "price": 850 },
+        { "type": "耳針+棉珍珠", "price": 890 }
+      ],
+      "colors": [
+        { "name": "紅白色", "hex": ["#ff4040", "#ffffff"], "image": "/images/hydrangea_1/s2.jpg" },
+        { "name": "藍白色", "hex": ["#7bb9ff", "#ffffff"], "image": "/images/hydrangea_1/s4.jpg" }
       ]
     }
   ]

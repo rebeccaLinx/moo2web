@@ -1,0 +1,75 @@
+
+> moo2web-tmp@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.120.33:3000
+✓ Ready in 13.5s
+
+○ Compiling / ...
+ GET / 200 in 6.6s (next.js: 5.7s, application-code: 884ms)
+ GET / 200 in 215ms (next.js: 72ms, application-code: 143ms)
+ GET / 200 in 3.3s (next.js: 2.4s, application-code: 952ms)
+ GET / 200 in 804ms (next.js: 700ms, application-code: 104ms)
+ GET / 200 in 2.2s (next.js: 2.1s, application-code: 153ms)
+ GET / 200 in 242ms (next.js: 73ms, application-code: 170ms)
+ GET / 200 in 2.4s (next.js: 2.3s, application-code: 112ms)
+ GET / 200 in 193ms (next.js: 76ms, application-code: 117ms)
+ GET / 200 in 2.3s (next.js: 1599ms, application-code: 713ms)
+ GET / 200 in 883ms (next.js: 773ms, application-code: 110ms)
+ GET / 200 in 2.4s (next.js: 2.2s, application-code: 200ms)
+ GET / 200 in 149ms (next.js: 66ms, application-code: 84ms)
+ GET / 200 in 2.2s (next.js: 2.1s, application-code: 132ms)
+ GET / 200 in 193ms (next.js: 112ms, application-code: 81ms)
+ GET / 200 in 3.0s (next.js: 2.0s, application-code: 982ms)
+ GET / 200 in 1672ms (next.js: 1391ms, application-code: 281ms)
+ GET / 200 in 172ms (next.js: 63ms, application-code: 109ms)
+ GET / 200 in 330ms (next.js: 175ms, application-code: 156ms)
+ GET / 200 in 2.9s (next.js: 1883ms, application-code: 1033ms)
+ GET / 200 in 1867ms (next.js: 1707ms, application-code: 160ms)
+ GET / 200 in 158ms (next.js: 62ms, application-code: 95ms)
+ GET / 200 in 146ms (next.js: 67ms, application-code: 79ms)
+ GET / 200 in 2.7s (next.js: 2.6s, application-code: 178ms)
+ GET / 200 in 2.2s (next.js: 1557ms, application-code: 663ms)
+ GET / 200 in 1176ms (next.js: 1008ms, application-code: 168ms)
+ GET / 200 in 230ms (next.js: 143ms, application-code: 87ms)
+[browser] Encountered two children with the same key, `goldFlower3_1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+ GET / 200 in 800ms (next.js: 62ms, application-code: 737ms)
+ GET / 200 in 3.5s (next.js: 2.2s, application-code: 1273ms)
+ GET / 200 in 1091ms (next.js: 973ms, application-code: 119ms)
+ GET / 200 in 2.9s (next.js: 1983ms, application-code: 963ms)
+ GET / 200 in 812ms (next.js: 694ms, application-code: 119ms)
+ GET / 200 in 2.6s (next.js: 1665ms, application-code: 904ms)
+ GET / 200 in 968ms (next.js: 861ms, application-code: 107ms)
+ GET / 200 in 2.7s (next.js: 1757ms, application-code: 909ms)
+ GET / 200 in 973ms (next.js: 862ms, application-code: 111ms)
+ GET / 200 in 2.5s (next.js: 1638ms, application-code: 824ms)
+ GET / 200 in 897ms (next.js: 732ms, application-code: 165ms)
+ GET / 200 in 2.4s (next.js: 2.3s, application-code: 120ms)
+ GET / 200 in 251ms (next.js: 159ms, application-code: 92ms)
+[browser] Encountered two children with the same key, `MermaidShell_1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+[browser] Encountered two children with the same key, `MermaidShell_1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+[browser] Encountered two children with the same key, `MermaidShell_1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+[browser] Encountered two children with the same key, `goldFlower3_1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+[browser] Encountered two children with the same key, `MermaidShell_1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+ GET / 200 in 7.6s (next.js: 6.4s, application-code: 1128ms)
+ GET / 200 in 3.3s (next.js: 1005ms, application-code: 2.3s)
+ GET / 200 in 346ms (next.js: 203ms, application-code: 143ms)
+ GET / 200 in 4.5s (next.js: 465ms, application-code: 4.0s)
+ GET / 200 in 422ms (next.js: 153ms, application-code: 269ms)
+ GET / 200 in 4.5s (next.js: 1457ms, application-code: 3.1s)
+[browser] Encountered two children with the same key, `MermaidShell_1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+[browser] Image with src "/images/wireBead_1/s5.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading (file://F:/ai/moo2web/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2477:13)
+○ Compiling / ...
+ GET / 200 in 8.5s (next.js: 6.9s, application-code: 1566ms)
+ GET / 200 in 14.2s (next.js: 10.8s, application-code: 3.4s)
+[browser] Encountered two children with the same key, `MermaidShell_1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+ GET / 200 in 9.5s (next.js: 5.2s, application-code: 4.3s)
+ GET / 200 in 4.2s (next.js: 3.1s, application-code: 1138ms)
+ GET / 200 in 4.2s (next.js: 3.3s, application-code: 871ms)
+ GET / 200 in 8.4s (next.js: 8.1s, application-code: 321ms)
+ GET / 200 in 2.7s (next.js: 360ms, application-code: 2.3s)
+ GET / 200 in 3.2s (next.js: 163ms, application-code: 3.1s)
+[?25h
