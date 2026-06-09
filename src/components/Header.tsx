@@ -18,7 +18,7 @@ export default function Header({ instagram }: { instagram: string }) {
           微光傾瀉，彷彿整片夜空都在你耳邊墜落<br />
           如花瓣般綻放的耳環，如晨露般晶瑩的髮圈<br />
           每件飾品都像是帶著故事的精靈，等待著找到自己的主人<br />
-          期許來到這裡的你，能遇見那個屬於自己的小奇蹟與小美好<br />
+          期許來到這裡的你，能遇見那個屬於自己的小奇蹟與小美好
         </p>
         <a href={instagram} target="_blank" rel="noopener noreferrer" className={styles.igBtn}>
           <IgIcon />

@@ -1,10 +1,18 @@
 {
   "intro": "歡迎來到 MOO².TW ✦ 精選手作耳環，夾式與針式均有販售\n每一件設計都來自對細節的堅持\n讓耳環成為妳今日最閃亮的主角\n歡迎透過 Instagram 私訊洽詢或訂購",
   "instagram": "https://www.instagram.com/moo2.tw/",
+  "notices": [
+    "台灣運送消費滿 NT$1500 即免運。",
+    "未達免運門檻者，運費為 NT$60。", 
+    "運送方式: 7-11/全家 店到店",
+    "<改夾式> 除特別標註, 都是加收 NT$30 的成本費用",
+    " "
+  ],
   "products": [
     {
       "id": "small-flowers",
       "name": "迷你小花花",
+      "style": ["迷你小花花"],
       "images": [
         "/images/smallFlower/s1.jpg",
         "/images/smallFlower/s2.jpg",
@@ -59,13 +67,14 @@
         { "type": "耳針", "price": 280 }
       ],
       "colors": [
-        { "name": "A款", "hex": "#F7F8F0", "image": "/images/cube_blue_1/s1.jpg" },
-        { "name": "B款", "hex": "#BFDDF0", "image": "/images/cube_blue_1/s2.jpg" }
+        { "name": "藍A", "hex": "#F7F8F0", "image": "/images/cube_blue_1/s1.jpg" },
+        { "name": "藍B", "hex": "#BFDDF0", "image": "/images/cube_blue_1/s2.jpg" }
       ]
     },
     {
       "id": "pinkFlowers_1",
       "name": "粉色小花垂墜耳環",
+      "style": ["迷你小花花"],
       "images": [
         "/images/pinkFlowers_1/s7.jpg", "/images/pinkFlowers_1/s8.jpg", 
         "/images/pinkFlowers_1/s5.jpg", "/images/pinkFlowers_1/s4.jpg", 
@@ -87,6 +96,7 @@
     {
       "id": "whiteFlowerBall_1",
       "name": "純白花球",
+      "style": ["花球"],
       "images": [
         "/images/whiteFlowerBall_1/s_08.jpg", "/images/whiteFlowerBall_1/s_06.jpg", 
         "/images/whiteFlowerBall_1/s_01.jpg", "/images/whiteFlowerBall_1/s_05.jpg", 
@@ -106,6 +116,7 @@
     {
       "id": "goldFlower3_1",
       "name": "金色絕美花球-3線",
+      "style": ["花球"],
       "images": [
         "/images/goldFlower3_1/s1.jpg", "/images/goldFlower3_1/s2.jpg", "/images/goldFlower3_1/s5.jpg",
         "/images/goldFlower3_1/s3.jpg", "/images/goldFlower3_1/s4.jpg"],
@@ -134,6 +145,7 @@
     {
       "id": "wireBead_1",
       "name": "線語珠光系列",
+      "style": ["花球"],
       "images": [
         "/images/wireBead_1/s5.jpg", "/images/wireBead_1/s4.jpg", "/images/wireBead_1/s1.jpg",
         "/images/wireBead_1/s2.jpg", "/images/wireBead_1/s3.jpg", "/images/wireBead_1/s6.jpg"
@@ -149,6 +161,7 @@
     {
       "id": "silverFlowerBall_1",
       "name": "銀色透明~閃閃~閃爆眼~花球-單線",
+      "style": ["花球"],
       "images": [
         "/images/silverFlowerBall_1/s_1.jpg", "/images/silverFlowerBall_1/s_2.jpg", 
         "/images/silverFlowerBall_1/s_4.jpg", "/images/silverFlowerBall_1/s_5.jpg", 
@@ -164,6 +177,7 @@
     {
       "id": "goldflowerball_1",
       "name": "金色透明花球-單線",
+      "style": ["花球"],
       "images": [
         "/images/goldflowerball_1/s2.jpg", 
         "/images/goldflowerball_1/s1.jpg",
@@ -172,7 +186,6 @@
       "description": "金線疊加, 閃耀交織",
       "variants": [
         { "type": "無吊墜+耳勾", "price": 1380, "image": "/images/goldflowerball_1/t1.jpg" },
-        { "type": "耳夾", "price": 1400},
         { "type": "有吊墜+耳勾", "price": 1420, "image": "/images/goldflowerball_1/t2.jpg" }
       ],
       "colors": [
@@ -200,6 +213,8 @@
     {
       "id": "orangeMix_1",
       "name": "腮紅系列-橘",
+      "style": ["花球"],
+      "theme": "腮紅系列",
       "images": [
         "/images/orangeMix_1/t1.jpg", "/images/orangeMix_1/t4.jpg", 
         "/images/orangeMix_1/t3.jpg", "/images/orangeMix_1/t2.jpg"
