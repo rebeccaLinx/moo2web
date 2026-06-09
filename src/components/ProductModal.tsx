@@ -12,9 +12,10 @@ interface Props {
   product: Product
   onClose: () => void
   initialColorIdx?: number
+  notices: string[]
 }
 
-export default function ProductModal({ product, onClose, initialColorIdx = -1 }: Props) {
+export default function ProductModal({ product, onClose, initialColorIdx = -1, notices }: Props) {
   const allImages = useMemo(() => {
     const seen = new Set(product.images)
     const extra: string[] = []
@@ -136,6 +137,17 @@ export default function ProductModal({ product, onClose, initialColorIdx = -1 }:
           </div>
           <h2 className={styles.name}>{product.name}</h2>
           <p className={styles.desc}>{product.description}</p>
+
+          {notices?.length > 0 && (
+            <div className={styles.notices}>
+              <span className={styles.noticesIcon} aria-hidden="true"></span>
+              <ul className={styles.noticesList}>
+                {notices.map((n, i) => (
+                  <li key={i} className={styles.noticesItem}>{n}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {product.colors.length > 0 && (
             <>

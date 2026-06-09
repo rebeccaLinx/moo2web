@@ -30,11 +30,14 @@ export interface Product {
   colors: Color[]
   sizes?: Size[]
   tag: string
+  style?: string | string[]
+  theme?: string | string[]
   promotion?: Promotion
 }
 
 export interface PriceData {
   intro: string
   instagram: string
+  notices: string[]
   products: Product[]
 }
