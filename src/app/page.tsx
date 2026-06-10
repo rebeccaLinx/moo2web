@@ -9,7 +9,7 @@ import { FilterProvider } from '@/components/FilterContext'
 import layout from './page.module.css'
 
 export default function Home() {
-  const data = priceData as unknown as PriceData
+  const data = priceData as PriceData
   return (
     <>
       <Header instagram={data.instagram} />

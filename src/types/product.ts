@@ -29,7 +29,7 @@ export interface Product {
   variants: Variant[]
   colors: Color[]
   sizes?: Size[]
-  tag: string
+  tag?: string
   style?: string | string[]
   theme?: string | string[]
   promotion?: Promotion
